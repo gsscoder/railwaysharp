@@ -34,7 +34,7 @@ namespace Chessie.CSharp.Test
         public static Result<Person, string> CheckAge(Person p)
         {
             if (p.Age < 18)
-                return Result<Person, string>.FailWith("Too young!");
+                return Result.FailWith<Person, string>("Too young!");
             if (p.Age > 40)
                 return Result<Person, string>.FailWith("Too old!");
             return Result<Person, string>.Succeed(p);

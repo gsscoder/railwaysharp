@@ -256,6 +256,67 @@ namespace RailwaySharp.ErrorHandling
             get { return tag; }
         }
 
+        public override string ToString()
+        {
+            switch (Tag)
+            {
+                case ResultType.Ok:
+                    var ok = (Ok<TSuccess, TMessage>)this;
+                    return string.Format(
+                        "OK: {0} - {1}",
+                        ok.Value.Success,
+                        string.Join(Environment.NewLine, ok.Value.Messages.Select(v => v.ToString())));
+                default:
+                    var bad = (Bad<TSuccess, TMessage>)this;
+                    return string.Format(
+                        "Error: {0}",
+                        string.Join(Environment.NewLine, bad.Messages.Select(v => v.ToString())));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Represents the result of a successful computation.
+    /// </summary>
+    /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
+    /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+    public sealed class Ok<TSuccess, TMessage> : Result<TSuccess, TMessage>
+    {
+        private readonly OkPair<TSuccess, TMessage> value;
+
+        public Ok(OkPair<TSuccess, TMessage> value)
+            : base(ResultType.Ok)
+        {
+        }
+
+        public OkPair<TSuccess, TMessage> Value
+        {
+            get { return value; }
+        }
+    }
+
+    /// <summary>
+    /// Represents the result of a failed computation.
+    /// </summary>
+    /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
+    /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+    public sealed class Bad<TSuccess, TMessage> : Result<TSuccess, TMessage>
+    {
+        private readonly IEnumerable<TMessage> messages;
+
+        public Bad(IEnumerable<TMessage> messages)
+            : base(ResultType.Bad)
+        {
+        }
+
+        public IEnumerable<TMessage> Messages
+        {
+            get { return messages; }
+        }
+    }
+
+    public static class Result
+    {
         /// <summary>
         /// Creates a Failure result with the given messages.
         /// </summary>
@@ -337,64 +398,6 @@ namespace RailwaySharp.ErrorHandling
                 return new Bad<TSuccess, Exception>(
                     new[] { ex });
             }
-        }
-
-        public override string ToString()
-        {
-            switch (Tag)
-            {
-                case ResultType.Ok:
-                    var ok = (Ok<TSuccess, TMessage>)this;
-                    return string.Format(
-                        "OK: {0} - {1}",
-                        ok.Value.Success,
-                        string.Join(Environment.NewLine, ok.Value.Messages.Select(v => v.ToString())));
-                default:
-                    var bad = (Bad<TSuccess, TMessage>)this;
-                    return string.Format(
-                        "Error: {0}",
-                        string.Join(Environment.NewLine, bad.Messages.Select(v => v.ToString())));
-            }
-        }
-    }
-
-    /// <summary>
-    /// Represents the result of a successful computation.
-    /// </summary>
-    /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-    /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-    public sealed class Ok<TSuccess, TMessage> : Result<TSuccess, TMessage>
-    {
-        private readonly OkPair<TSuccess, TMessage> value;
-
-        public Ok(OkPair<TSuccess, TMessage> value)
-            : base(ResultType.Ok)
-        {
-        }
-
-        public OkPair<TSuccess, TMessage> Value
-        {
-            get { return value; }
-        }
-    }
-
-    /// <summary>
-    /// Represents the result of a failed computation.
-    /// </summary>
-    /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-    /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-    public sealed class Bad<TSuccess, TMessage> : Result<TSuccess, TMessage>
-    {
-        private readonly IEnumerable<TMessage> messages;
-
-        public Bad(IEnumerable<TMessage> messages)
-            : base(ResultType.Bad)
-        {
-        }
-
-        public IEnumerable<TMessage> Messages
-        {
-            get { return messages; }
         }
     }
 
