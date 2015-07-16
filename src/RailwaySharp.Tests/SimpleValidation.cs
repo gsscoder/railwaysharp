@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
 using RailwaySharp.ErrorHandling;
 
 namespace RailwaySharp.Tests
@@ -27,65 +28,61 @@ namespace RailwaySharp.Tests
         }
     }
 
-    [TestFixture]
     public class TrySpecs
     {
-        [Test]
+        [Fact]
         public void TryWillCatch()
         {
             var exn = new Exception("Hello World");
             var result = Result.Try<string>(() => { throw exn; });
-            Assert.AreEqual(exn, result.FailedWith().First());
+            exn.ShouldBeEquivalentTo(result.FailedWith().First());
         }
 
-        [Test]
+        [Fact]
         public void TryWillReturnValue()
         {
             var result = Result.Try(() => "hello world");
-            Assert.AreEqual("hello world", result.SucceededWith());
+            "hello world".ShouldBeEquivalentTo(result.SucceededWith());
         }
     }
 
-    [TestFixture]
     public class SimpleValidation
     {
-        [Test]
+        [Fact]
         public void CanCreateSuccess()
         {
             var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
             var result = Validation.ValidateInput(request);
-            Assert.AreEqual(request, result.SucceededWith());
+            request.ShouldBeEquivalentTo(result.SucceededWith());
         }
     }
 
-    [TestFixture]
     public class SimplePatternMatching
     {
-        [Test]
+        [Fact]
         public void CanMatchSuccess()
         {
             var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
             var result = Validation.ValidateInput(request);
             result.Match(
-               (x, msgs) => { Assert.AreEqual(request, x); },
+               (x, msgs) => { request.ShouldBeEquivalentTo(x); },
                msgs => { throw new Exception("wrong match case"); });
         }
 
-        [Test]
+        [Fact]
         public void CanMatchFailure()
         {
             var request = new Request { Name = "Steffen", EMail = "" };
             var result = Validation.ValidateInput(request);
             result.Match(
                (x, msgs) => { throw new Exception("wrong match case"); },
-               msgs => { Assert.AreEqual("Email must not be blank", msgs.ElementAt(0)); });
+               msgs => { "Email must not be blank".ShouldBeEquivalentTo(msgs.ElementAt(0)); });
         }
     }
 
-    [TestFixture]
     public class SimpleEitherPatternMatching
     {
-        [Test]
+        [Fact]
         public void CanMatchSuccess()
         {
             var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
@@ -95,10 +92,10 @@ namespace RailwaySharp.Tests
                  .Either(
                    (x, msgs) => x,
                    msgs => { throw new Exception("wrong match case"); });
-            Assert.AreEqual(request, result);
+            request.ShouldBeEquivalentTo(result);
         }
 
-        [Test]
+        [Fact]
         public void CanMatchFailure()
         {
             var request = new Request { Name = "Steffen", EMail = "" };
@@ -108,7 +105,7 @@ namespace RailwaySharp.Tests
                    (x, msgs) => { throw new Exception("wrong match case"); },
                    msgs => msgs.ElementAt(0));
 
-            Assert.AreEqual("Email must not be blank", result);
+            "Email must not be blank".ShouldBeEquivalentTo(result);
         }
     }
 }
