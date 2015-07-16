@@ -307,6 +307,7 @@ namespace RailwaySharp.ErrorHandling
         public Bad(IEnumerable<TMessage> messages)
             : base(ResultType.Bad)
         {
+            this.messages = messages;
         }
 
         public IEnumerable<TMessage> Messages
