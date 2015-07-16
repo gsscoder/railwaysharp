@@ -287,6 +287,7 @@ namespace RailwaySharp.ErrorHandling
         public Ok(OkPair<TSuccess, TMessage> value)
             : base(ResultType.Ok)
         {
+            this.value = value;
         }
 
         public OkPair<TSuccess, TMessage> Value
