@@ -698,10 +698,10 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="result"></param>
         /// <param name="ifSuccess">Function in case of success.</param>
         /// <param name="ifFailure">Function in case of failure.</param>
-        /// <returns>A computation result.</returns>
-        public static Result<TSuccess, TMessage> Either<TSuccess, TMessage>(this Result<TSuccess, TMessage> result,
-            Func<TSuccess, IEnumerable<TMessage>, Result<TSuccess, TMessage>> ifSuccess,
-            Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> ifFailure)
+        /// <returns>A successful value.</returns>
+        public static TResult Either<TSuccess, TMessage, TResult>(this Result<TSuccess, TMessage> result,
+            Func<TSuccess, IEnumerable<TMessage>, TResult> ifSuccess,
+            Func<IEnumerable<TMessage>, TResult> ifFailure)
         {
             var ok = result as Ok<TSuccess, TMessage>;
             if (ok != null)

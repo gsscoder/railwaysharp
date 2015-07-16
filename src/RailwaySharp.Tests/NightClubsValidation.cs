@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chessie.CSharp.Test
+namespace RailwaySharp.Tests
 {
     // originally from https://github.com/fsprojects/fsharpx/blob/master/tests/FSharpx.CSharpTests/ValidationExample.cs
 
@@ -36,24 +36,24 @@ namespace Chessie.CSharp.Test
             if (p.Age < 18)
                 return Result.FailWith<Person, string>("Too young!");
             if (p.Age > 40)
-                return Result<Person, string>.FailWith("Too old!");
-            return Result<Person, string>.Succeed(p);
+                return Result.FailWith<Person, string>("Too old!");
+            return Result.Succeed<Person, string>(p);
         }
 
         public static Result<Person, string> CheckClothes(Person p)
         {
             if (p.Gender == Gender.Male && !p.Clothes.Contains("Tie"))
-                return Result<Person, string>.FailWith("Smarten up!");
+                return Result.FailWith<Person, string>("Smarten up!");
             if (p.Gender == Gender.Female && p.Clothes.Contains("Trainers"))
-                return Result<Person, string>.FailWith("Wear high heels!");
-            return Result<Person, string>.Succeed(p);
+                return Result.FailWith<Person, string>("Wear high heels!");
+            return Result.Succeed<Person, string>(p);
         }
 
         public static Result<Person, string> CheckSobriety(Person p)
         {
             if (new[] { Sobriety.Drunk, Sobriety.Paralytic, Sobriety.Unconscious }.Contains(p.Sobriety))
-                return Result<Person, string>.FailWith("Sober up!");
-            return Result<Person, string>.Succeed(p);
+                return Result.FailWith<Person, string>("Sober up!");
+            return Result.Succeed<Person, string>(p);
         }
     }
 
