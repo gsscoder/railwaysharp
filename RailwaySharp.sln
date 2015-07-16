@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp", "src\RailwaySharp\RailwaySharp.csproj", "{DDE48D28-267E-48D5-85E9-AFE8878A5721}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp.Tests", "src\RailwaySharp.Tests\RailwaySharp.Tests.csproj", "{03188E48-64C0-466A-A9A4-8C70FCC7669A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{DDE48D28-267E-48D5-85E9-AFE8878A5721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDE48D28-267E-48D5-85E9-AFE8878A5721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDE48D28-267E-48D5-85E9-AFE8878A5721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03188E48-64C0-466A-A9A4-8C70FCC7669A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03188E48-64C0-466A-A9A4-8C70FCC7669A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03188E48-64C0-466A-A9A4-8C70FCC7669A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03188E48-64C0-466A-A9A4-8C70FCC7669A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
