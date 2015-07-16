@@ -598,7 +598,7 @@ namespace RailwaySharp.ErrorHandling
             if (wrappedFunction.Tag == ResultType.Ok && result.Tag == ResultType.Bad)
             {
                 return new Bad<TSuccess, TMessage>(
-                    ((Bad<Func<TValue, TSuccess>, TMessage>)wrappedFunction).Messages);
+                    ((Bad<TValue, TMessage>)result).Messages);
             }
 
             var bad1 = (Bad<Func<TValue, TSuccess>, TMessage>)wrappedFunction;
