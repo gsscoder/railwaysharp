@@ -623,6 +623,14 @@ namespace RailwaySharp.ErrorHandling
             return Apply(Ok<Func<TValue, TSuccess>, TMessage>(func), result);
         }
 
+        public static Result<TSuccess1, TMessage1> Lift2<TSuccess, TMessage, TSuccess1, TMessage1>(
+            Func<TSuccess, Func<TMessage, TSuccess1>> func,
+            Result<TSuccess, TMessage1> a,
+            Result<TMessage, TMessage1> b)
+        {
+            return Apply(Lift(func, a), b);
+        }
+
         /// <summary>
         /// Collects a sequence of Results and accumulates their values.
         /// If the sequence contains an error the error will be propagated.
