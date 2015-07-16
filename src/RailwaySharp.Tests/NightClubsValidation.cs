@@ -1,10 +1,11 @@
-﻿using RailwaySharp.ErrorHandling;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
+using RailwaySharp.ErrorHandling;
+using FluentAssertions;
 
 namespace RailwaySharp.Tests
 {
@@ -68,47 +69,45 @@ namespace RailwaySharp.Tests
         }
     }
 
-    [TestFixture]
     class Test1
     {
-        [Test]
+        [Fact]
         public void Part1()
         {
             var Dave = new Person(Gender.Male, 41, new List<string> { "Tie", "Jeans" }, Sobriety.Sober);
             var costDave = ClubbedToDeath.CostToEnter(Dave);
-            Assert.AreEqual("Too old!", costDave.FailedWith().First());
+            "Too old!".ShouldBeEquivalentTo(costDave.FailedWith().First());
 
             var Ken = new Person(Gender.Male, 28, new List<string> { "Tie", "Shirt" }, Sobriety.Tipsy);
             var costKen = ClubbedToDeath.CostToEnter(Ken);
-            Assert.AreEqual(5m, costKen.SucceededWith());
+            5m.ShouldBeEquivalentTo(costKen.SucceededWith());
 
             var Ruby = new Person(Gender.Female, 25, new List<string> { "High heels" }, Sobriety.Tipsy);
             var costRuby = ClubbedToDeath.CostToEnter(Ruby);
             costRuby.Match(
                 (x, msgs) =>
                 {
-                    Assert.AreEqual(0m, x);
+                    0m.ShouldBeEquivalentTo(x);
                 },
                 msgs =>
                 {
-                    Assert.Fail();
-
+                    Assert.True(false, "fail");
                 });
 
             var Ruby17 = new Person(Ruby.Gender, 17, Ruby.Clothes, Ruby.Sobriety);
             var costRuby17 = ClubbedToDeath.CostToEnter(Ruby17);
-            Assert.AreEqual("Too young!", costRuby17.FailedWith().First());
+            "Too young!".ShouldAllBeEquivalentTo(costRuby17.FailedWith().First());
 
             var KenUnconscious = new Person(Ken.Gender, Ken.Age, Ken.Clothes, Sobriety.Unconscious);
             var costKenUnconscious = ClubbedToDeath.CostToEnter(KenUnconscious);
             costKenUnconscious.Match(
                 (x, msgs) =>
                 {
-                    Assert.Fail();
+                    Assert.True(false, "fail");
                 },
                 msgs =>
                 {
-                    Assert.AreEqual("Sober up!", msgs.First());
+                    "Sober up!".ShouldBeEquivalentTo(msgs.First());
                 });
         }
     }
