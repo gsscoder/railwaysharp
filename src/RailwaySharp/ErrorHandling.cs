@@ -793,6 +793,21 @@ namespace RailwaySharp.ErrorHandling
             return Trial.Bind(func, result);
         }
 
+        public static Result<TResult, TMessage> SelectMany<TSuccess, TMessage, TValue, TResult>(
+            this Result<TSuccess, TMessage> result,
+            Func<TSuccess, Result<TValue, TMessage>> func,
+            Func<TSuccess, TValue, TResult> mapperFunc)
+        {
+            Func<TSuccess, Func<TValue, TResult>> curriedMapper = suc => val => mapperFunc(suc, val);
+            Func<
+                Result<TSuccess, TMessage>,
+                Result<TValue, TMessage>,
+                Result<TResult, TMessage>
+            > liftedMapper = (a, b) => Trial.Lift2(curriedMapper, a, b);
+            var v = Trial.Bind(func, result);
+            return liftedMapper(result, v);
+        }
+
         /// <summary>
         /// Lifts a Func into a Result and applies it on the given result.
         /// </summary>
