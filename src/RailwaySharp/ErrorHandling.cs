@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RailwaySharp
+namespace RailwaySharp.ErrorHandling
 {
     #region Enumerable Extensions
     static class EnumerableExtensions
