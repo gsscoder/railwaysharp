@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define ERRH_INLINE_METHODS //disable method inlining when compiling for <= NET 4.0
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -413,7 +415,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="value">Value of successful computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Ok<TSuccess, TMessage>(TSuccess value)
         {
             return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>()));
@@ -426,7 +430,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="value">Value of successful computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Pass<TSuccess, TMessage>(TSuccess value)
         {
             return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>()));
@@ -440,7 +446,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="message">A message.</param>
         /// <param name="value">Value of successful computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Warn<TSuccess, TMessage>(TMessage message, TSuccess value)
         {
             return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, new[] { message }));
@@ -453,7 +461,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="message">A message.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Fail<TSuccess, TMessage>(TMessage message)
         {
             return new Bad<TSuccess, TMessage>(new[] { message });
@@ -466,7 +476,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static bool Failed<TSuccess, TMessage>(Result<TSuccess, TMessage> result)
         {
             return result.Tag == ResultType.Bad;
@@ -482,7 +494,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="failureFunc">Mapping function for failure value.</param>
         /// <param name="trialResult">The computation to evaluate.</param>
         /// <returns>A new value.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static TResult Either<TSuccess, TMessage, TResult>(
             Func<OkPair<TSuccess, TMessage>, TResult> successFunc,
             Func<IEnumerable<TMessage>, TResult> failureFunc,
@@ -505,7 +519,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="result">A computation.</param>
         /// <returns>A successful value.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static TSuccess ReturnOrFail<TSuccess, TMessage>(Result<TSuccess, TMessage> result)
         {
             Func<IEnumerable<TMessage>, TSuccess> raiseExn = msgs =>
@@ -526,7 +542,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="messages">A sequence of messages.</param>
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> MergeMessages<TSuccess, TMessage>(
             IEnumerable<TMessage> messages,
             Result<TSuccess, TMessage> result)
@@ -552,7 +570,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="func">A mapping function.</param>
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Bind<TValue, TSuccess, TMessage>(
             Func<TValue, Result<TSuccess, TMessage>> func,
             Result<TValue, TMessage> result)
@@ -573,7 +593,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Flatten<TSuccess, TMessage>(
             Result<Result<TSuccess, TMessage>, TMessage> result)
         {
@@ -590,7 +612,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="wrappedFunction">A computation result with a wrapped function.</param>
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Apply<TValue, TSuccess, TMessage>(
             Result<Func<TValue, TSuccess>, TMessage> wrappedFunction,
             Result<TValue, TMessage> result)
@@ -628,7 +652,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="func">A mapping function.</param>
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess, TMessage> Lift<TValue, TSuccess, TMessage>(
             Func<TValue, TSuccess> func,
             Result<TValue, TMessage> result)
@@ -636,7 +662,9 @@ namespace RailwaySharp.ErrorHandling
             return Apply(Ok<Func<TValue, TSuccess>, TMessage>(func), result);
         }
 
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TSuccess1, TMessage1> Lift2<TSuccess, TMessage, TSuccess1, TMessage1>(
             Func<TSuccess, Func<TMessage, TSuccess1>> func,
             Result<TSuccess, TMessage1> a,
@@ -653,7 +681,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="xs">A sequence of computation results.</param>
         /// <returns>A computation result with sequence of successful values.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<IEnumerable<TSuccess>, TMessage> Collect<TSuccess, TMessage>(
             IEnumerable<Result<TSuccess, TMessage>> xs)
         {
@@ -701,7 +731,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="result">A computation.</param>
         /// <param name="ifSuccess"><see cref="System.Action"/> in case of success.</param>
         /// <param name="ifFailure"><see cref="System.Action"/> in case of failure.</param>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static void Match<TSuccess, TMessage>(this Result<TSuccess, TMessage> result,
             Action<TSuccess, IEnumerable<TMessage>> ifSuccess,
             Action<IEnumerable<TMessage>> ifFailure)
@@ -725,7 +757,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="ifSuccess">Function in case of success.</param>
         /// <param name="ifFailure">Function in case of failure.</param>
         /// <returns>A successful value.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static TResult Either<TSuccess, TMessage, TResult>(this Result<TSuccess, TMessage> result,
             Func<TSuccess, IEnumerable<TMessage>, TResult> ifSuccess,
             Func<IEnumerable<TMessage>, TResult> ifFailure)
@@ -748,7 +782,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="result">A computation.</param>
         /// <param name="func">A mapping function.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TResult, TMessage> Map<TSuccess, TMessage, TResult>(this Result<TSuccess, TMessage> result,
             Func<TSuccess, TResult> func)
         {
@@ -763,7 +799,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="values">A sequence of computation results.</param>
         /// <returns>A computation result with a sequence of successful values.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<IEnumerable<TSuccess>, TMessage> Collect<TSuccess, TMessage>(
             this IEnumerable<Result<TSuccess, TMessage>> values)
         {
@@ -778,7 +816,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="result">A computation.</param>
         /// <returns>A computation result with a sequence of successful values.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<IEnumerable<TSuccess>, TMessage> Flatten<TSuccess, TMessage>(this Result<IEnumerable<Result<TSuccess, TMessage>>, TMessage> result)
         {
             if (result.Tag == ResultType.Ok)
@@ -808,7 +848,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="result">A computation.</param>
         /// <param name="func">A mapping function.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TResult, TMessage> SelectMany<TSuccess, TMessage, TResult>(this Result<TSuccess, TMessage> result,
             Func<TSuccess, Result<TResult, TMessage>> func)
         {
@@ -828,7 +870,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="func">A function.</param>
         /// <param name="mapperFunc">A mapping function.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TResult, TMessage> SelectMany<TSuccess, TMessage, TValue, TResult>(
             this Result<TSuccess, TMessage> result,
             Func<TSuccess, Result<TValue, TMessage>> func,
@@ -853,7 +897,9 @@ namespace RailwaySharp.ErrorHandling
         /// <param name="result">A computation.</param>
         /// <param name="func">A mapping function.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Result<TResult, TMessage> Select<TSuccess, TMessage, TResult>(this Result<TSuccess, TMessage> result,
             Func<TSuccess, TResult> func)
         {
@@ -867,7 +913,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static IEnumerable<TMessage> FailedWith<TSuccess, TMessage>(this Result<TSuccess, TMessage> result)
         {
             if (result.Tag == ResultType.Ok)
@@ -889,7 +937,9 @@ namespace RailwaySharp.ErrorHandling
         /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
         /// <param name="result">A computation.</param>
         /// <returns>A computation result.</returns>
+#if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static TSuccess SucceededWith<TSuccess, TMessage>(this Result<TSuccess, TMessage> result)
         {
             if (result.Tag == ResultType.Ok)
