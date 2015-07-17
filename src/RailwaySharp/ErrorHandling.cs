@@ -662,6 +662,17 @@ namespace RailwaySharp.ErrorHandling
             return Apply(Ok<Func<TValue, TSuccess>, TMessage>(func), result);
         }
 
+        /// <summary>
+        /// Promote a function to a monad/applicative, scanning the monadic/applicative arguments from left to right.
+        /// </summary>
+        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
+        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+        /// <typeparam name="TSuccess1">Type that models the new result of a successful computation.</typeparam>
+        /// <typeparam name="TMessage1">Type that model the new message related to a computation.</typeparam>
+        /// <param name="func">A function.</param>
+        /// <param name="a">First computation result.</param>
+        /// <param name="b">Second computation result.</param>
+        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
