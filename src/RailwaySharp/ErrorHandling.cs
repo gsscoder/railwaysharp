@@ -793,6 +793,19 @@ namespace RailwaySharp.ErrorHandling
             return Trial.Bind(func, result);
         }
 
+        /// <summary>
+        /// If the result is a Success it executes the given Func on the value.
+        /// If the result of the Func is a Success it maps it using the given Func.
+        /// Otherwise the exisiting failure is propagated.
+        /// </summary>
+        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
+        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+        /// <typeparam name="TValue">Type of value.</typeparam>
+        /// <typeparam name="TResult">Type of mapped result.</typeparam>
+        /// <param name="result">A computation.</param>
+        /// <param name="func">A function.</param>
+        /// <param name="mapperFunc">A mapping function.</param>
+        /// <returns>A computation result.</returns>
         public static Result<TResult, TMessage> SelectMany<TSuccess, TMessage, TValue, TResult>(
             this Result<TSuccess, TMessage> result,
             Func<TSuccess, Result<TValue, TMessage>> func,
