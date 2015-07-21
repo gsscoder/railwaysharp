@@ -1,13 +1,20 @@
-﻿#define ERRH_INLINE_METHODS //disable method inlining when compiling for <= NET 4.0
+﻿#define ERRH_PUBLIC // Comment this to set visibility to internal.
+#define ERRH_INLINE_METHODS // Comment this to disable method inlining when compiling for <= NET 4.0.
+#define ERRH_BUILTIN_ENUMEXT // Comment this to use CSharpx.EnumerableExtensions.
+#define ERRH_BUILTIN_UNIT // Comment this to use CSharpx.Unit.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+#if !ERRH_BUILTIN_ENUMEXT || !ERRH_BUILTIN_UNIT
+using CSharpx;
+#endif
 
 namespace RailwaySharp.ErrorHandling
 {
     #region Enumerable Extensions
+#if ERRH_BUILTIN_ENUMEXT
     static class EnumerableExtensions
     {
         private static IEnumerable<TSource> AssertCountImpl<TSource>(IEnumerable<TSource> source,
@@ -112,9 +119,15 @@ namespace RailwaySharp.ErrorHandling
             return source.Select((item, index) => new KeyValuePair<int, TSource>(startIndex + index, item));
         }
     }
+#endif
     #endregion
 
-    public struct Unit : IEquatable<Unit>
+    #region Unit Type
+#if ERRH_BUILTIN_UNIT
+#if ERRH_PUBLIC
+    public
+#endif
+    struct Unit : IEquatable<Unit>
     {
         private static readonly Unit @default = new Unit();
 
@@ -150,8 +163,17 @@ namespace RailwaySharp.ErrorHandling
 
         public static Unit Default { get { return @default; } }
     }
+#endif
+    #endregion
 
-    public sealed class OkPair<TSuccess, TMessage> : IEquatable<OkPair<TSuccess, TMessage>>
+    #region Ok Type Custom Tuple
+    /// <summary>
+    /// Tuple for <see cref="RailwaySharp.ErrorHandling.Ok{TSuccess, TMessage}"/> type. 
+    /// </summary>
+#if ERRH_PUBLIC
+    public
+#endif
+    sealed class OkPair<TSuccess, TMessage> : IEquatable<OkPair<TSuccess, TMessage>>
     {
         private readonly TSuccess success;
         private readonly IEnumerable<TMessage> messages;
@@ -213,7 +235,10 @@ namespace RailwaySharp.ErrorHandling
         }
     }
 
-    public static class OkPair
+#if ERRH_PUBLIC
+    public
+#endif
+    static class OkPair
     {
         public static OkPair<TSuccess, TMessage> Create<TSuccess, TMessage>(TSuccess success, IEnumerable<TMessage> messages)
         {
@@ -233,8 +258,12 @@ namespace RailwaySharp.ErrorHandling
             return okPair.Messages;
         }
     }
+    #endregion
 
-    public enum ResultType
+#if ERRH_PUBLIC
+    public
+#endif
+    enum ResultType
     {
         Ok,
         Bad
@@ -245,7 +274,10 @@ namespace RailwaySharp.ErrorHandling
     /// </summary>
     /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
     /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-    public abstract class Result<TSuccess, TMessage>
+#if ERRH_PUBLIC
+    public
+#endif 
+    abstract class Result<TSuccess, TMessage>
     {
         private readonly ResultType tag;
 
@@ -283,7 +315,10 @@ namespace RailwaySharp.ErrorHandling
     /// </summary>
     /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
     /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-    public sealed class Ok<TSuccess, TMessage> : Result<TSuccess, TMessage>
+#if ERRH_PUBLIC
+    public
+#endif 
+    sealed class Ok<TSuccess, TMessage> : Result<TSuccess, TMessage>
     {
         private readonly OkPair<TSuccess, TMessage> value;
 
@@ -304,7 +339,10 @@ namespace RailwaySharp.ErrorHandling
     /// </summary>
     /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
     /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-    public sealed class Bad<TSuccess, TMessage> : Result<TSuccess, TMessage>
+#if ERRH_PUBLIC
+    public
+#endif
+    sealed class Bad<TSuccess, TMessage> : Result<TSuccess, TMessage>
     {
         private readonly IEnumerable<TMessage> messages;
 
@@ -320,7 +358,10 @@ namespace RailwaySharp.ErrorHandling
         }
     }
 
-    public static class Result
+#if ERRH_PUBLIC
+    public
+#endif
+    static class Result
     {
         /// <summary>
         /// Creates a Failure result with the given messages.
@@ -381,7 +422,10 @@ namespace RailwaySharp.ErrorHandling
         }
     }
 
-    public static class Trial
+#if ERRH_PUBLIC
+    public
+#endif
+    static class Trial
     {
         /// <summary>
         /// Wraps a value in a Success.
@@ -636,7 +680,10 @@ namespace RailwaySharp.ErrorHandling
     /// <summary>
     /// Extensions methods for easier usage.
     /// </summary>
-    public static class ResultExtensions
+#if ERRH_PUBLIC
+    public
+#endif
+    static class ResultExtensions
     {
         /// <summary>
         /// Allows pattern matching on Results.
