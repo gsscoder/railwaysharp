@@ -325,10 +325,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Creates a Failure result with the given messages.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="messages">A sequence of messages.</param>
-        /// <returns>A computation result.</returns>
         public static Result<TSuccess, TMessage> FailWith<TSuccess, TMessage>(IEnumerable<TMessage> messages)
         {
             return new Bad<TSuccess, TMessage>(messages);
@@ -337,10 +333,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Creates a Failure result with the given message.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="message">A message.</param>
-        /// <returns>A computation result.</returns>
         public static Result<TSuccess, TMessage> FailWith<TSuccess, TMessage>(TMessage message)
         {
             return new Bad<TSuccess, TMessage>(new[] { message });
@@ -349,10 +341,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Creates a Success result with the given value.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="value">Value of successful computation.</param>
-        /// <returns>A computation result.</returns>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value)
         {
             return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>()));
@@ -361,11 +349,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Creates a Success result with the given value and the given message.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="value">Value of successful computation.</param>
-        /// <param name="message">A message.</param>
-        /// <returns>A computation result.</returns>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, TMessage message)
         {
             return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, new[] { message }));
@@ -374,11 +357,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Creates a Success result with the given value and the given message.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="value">Value of successful computation.</param>
-        /// <param name="messages">A sequence of messages.</param>
-        /// <returns>A computation result.</returns>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, IEnumerable<TMessage> messages)
         {
             return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, messages));
@@ -387,9 +365,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Executes the given function on a given success or captures the failure.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <param name="func">A function that produces the successful value.</param>
-        /// <returns>A computation result.</returns>
         public static Result<TSuccess, Exception> Try<TSuccess>(Func<TSuccess> func)
         {
             try
@@ -411,10 +386,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Wraps a value in a Success.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="value">Value of successful computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -426,10 +397,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Wraps a value in a Success.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="value">Value of successful computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -441,11 +408,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Wraps a value in a Success and adds a message.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="message">A message.</param>
-        /// <param name="value">Value of successful computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -457,10 +419,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Wraps a message in a Failure.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="message">A message.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -472,10 +430,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Returns true if the result was not successful.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -487,13 +441,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Takes a Result and maps it with successFunc if it is a Success otherwise it maps it with failureFunc.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="successFunc">Mapping function for sucessful value.</param>
-        /// <param name="failureFunc">Mapping function for failure value.</param>
-        /// <param name="trialResult">The computation to evaluate.</param>
-        /// <returns>A new value.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -515,10 +462,6 @@ namespace RailwaySharp.ErrorHandling
         /// If the given result is a Success the wrapped value will be returned. 
         /// Otherwise the function throws an exception with Failure message of the result.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result">A computation.</param>
-        /// <returns>A successful value.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -537,11 +480,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Appends the given messages with the messages in the given result.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="messages">A sequence of messages.</param>
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -564,12 +502,6 @@ namespace RailwaySharp.ErrorHandling
         /// If the result is a Success it executes the given function on the value.
         /// Otherwise the exisiting failure is propagated.
         /// </summary>
-        /// <typeparam name="TValue">Type of function input value.</typeparam>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="func">A mapping function.</param>
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -589,10 +521,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Flattens a nested result given the Failure types are equal.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -606,12 +534,6 @@ namespace RailwaySharp.ErrorHandling
         /// If the wrapped function is a success and the given result is a success the function is applied on the value. 
         /// Otherwise the exisiting error messages are propagated.
         /// </summary>
-        /// <typeparam name="TValue">Type of function input value.</typeparam>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="wrappedFunction">A computation result with a wrapped function.</param>
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -646,12 +568,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Lifts a function into a Result container and applies it on the given result.
         /// </summary>
-        /// <typeparam name="TValue">Type of function input value.</typeparam>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="func">A mapping function.</param>
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -665,14 +581,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Promote a function to a monad/applicative, scanning the monadic/applicative arguments from left to right.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <typeparam name="TSuccess1">Type that models the new result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage1">Type that model the new message related to a computation.</typeparam>
-        /// <param name="func">A function.</param>
-        /// <param name="a">First computation result.</param>
-        /// <param name="b">Second computation result.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -688,10 +596,6 @@ namespace RailwaySharp.ErrorHandling
         /// Collects a sequence of Results and accumulates their values.
         /// If the sequence contains an error the error will be propagated.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="xs">A sequence of computation results.</param>
-        /// <returns>A computation result with sequence of successful values.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -737,11 +641,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Allows pattern matching on Results.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result">A computation.</param>
-        /// <param name="ifSuccess"><see cref="System.Action"/> in case of success.</param>
-        /// <param name="ifFailure"><see cref="System.Action"/> in case of failure.</param>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -762,12 +661,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Allows pattern matching on Results.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result"></param>
-        /// <param name="ifSuccess">Function in case of success.</param>
-        /// <param name="ifFailure">Function in case of failure.</param>
-        /// <returns>A successful value.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -787,12 +680,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Lifts a Func into a Result and applies it on the given result.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <typeparam name="TResult">Type of mapped result.</typeparam>
-        /// <param name="result">A computation.</param>
-        /// <param name="func">A mapping function.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -806,10 +693,6 @@ namespace RailwaySharp.ErrorHandling
         /// Collects a sequence of Results and accumulates their values.
         /// If the sequence contains an error the error will be propagated.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="values">A sequence of computation results.</param>
-        /// <returns>A computation result with a sequence of successful values.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -823,10 +706,6 @@ namespace RailwaySharp.ErrorHandling
         /// Collects a sequence of Results and accumulates their values.
         /// If the sequence contains an error the error will be propagated.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result with a sequence of successful values.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -853,12 +732,6 @@ namespace RailwaySharp.ErrorHandling
         /// If the result is a Success it executes the given Func on the value.
         /// Otherwise the exisiting failure is propagated.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <typeparam name="TResult">Type of mapped result.</typeparam>
-        /// <param name="result">A computation.</param>
-        /// <param name="func">A mapping function.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -873,14 +746,6 @@ namespace RailwaySharp.ErrorHandling
         /// If the result of the Func is a Success it maps it using the given Func.
         /// Otherwise the exisiting failure is propagated.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <typeparam name="TValue">Type of value.</typeparam>
-        /// <typeparam name="TResult">Type of mapped result.</typeparam>
-        /// <param name="result">A computation.</param>
-        /// <param name="func">A function.</param>
-        /// <param name="mapperFunc">A mapping function.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -902,12 +767,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Lifts a Func into a Result and applies it on the given result.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <typeparam name="TResult">Type of mapped result.</typeparam>
-        /// <param name="result">A computation.</param>
-        /// <param name="func">A mapping function.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -920,10 +779,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Returns the error messages or fails if the result was a success.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -944,10 +799,6 @@ namespace RailwaySharp.ErrorHandling
         /// <summary>
         /// Returns the result or fails if the result was an error.
         /// </summary>
-        /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-        /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
-        /// <param name="result">A computation.</param>
-        /// <returns>A computation result.</returns>
 #if ERRH_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
