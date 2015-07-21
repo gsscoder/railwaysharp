@@ -396,7 +396,7 @@ namespace RailwaySharp.ErrorHandling
         }
 
         /// <summary>
-        /// Creates a Success result with the given value and the given message.
+        /// Creates a Success result with the given value and the given messages.
         /// </summary>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, IEnumerable<TMessage> messages)
         {
