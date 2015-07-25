@@ -14,7 +14,7 @@ using CSharpx;
 namespace RailwaySharp.ErrorHandling
 {
     #region Enumerable Extensions
-#if !ERRH_CSX_TYPES
+#if ERRH_BUILTIN_TYPES
     static class EnumerableExtensions
     {
         private static IEnumerable<TSource> AssertCountImpl<TSource>(IEnumerable<TSource> source,
@@ -123,7 +123,7 @@ namespace RailwaySharp.ErrorHandling
     #endregion
 
     #region Unit Type
-#if !ERRH_BUILTIN_TYPES
+#if ERRH_BUILTIN_TYPES
 #if !ERRH_INTERNAL
     public
 #endif
