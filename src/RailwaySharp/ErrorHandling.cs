@@ -223,7 +223,7 @@ namespace RailwaySharp.ErrorHandling
         /// Returns a value that indicates whether the current instance and a specified <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> have the same value.
         /// </summary>
         /// <param name="other">The <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> instance to compare.</param>
-        /// <returns><value>true</value> if this instance of <see cref="RailwaySharp..ErrorHandling.OkPair{TSuccess, TMessage}"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        /// <returns><value>true</value> if this instance of <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
         public bool Equals(OkPair<TSuccess, TMessage> other)
         {
             if (other == null)
