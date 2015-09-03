@@ -732,8 +732,8 @@ namespace RailwaySharp.ErrorHandling
                 var ok = (Ok<TSuccess, TMessage>)result;
                 throw new Exception(
                     string.Format("Result was a success: {0} - {1}",
-                    ok.Value.Success,
-                    string.Join(Environment.NewLine, ok.Value.Messages.Select(m => m.ToString()))));
+                    ok.Success,
+                    string.Join(Environment.NewLine, ok.Messages.Select(m => m.ToString()))));
             }
             var bad = (Bad<TSuccess, TMessage>)result;
             return bad.Messages;
@@ -750,7 +750,7 @@ namespace RailwaySharp.ErrorHandling
             if (result.Tag == ResultType.Ok)
             {
                 var ok = (Ok<TSuccess, TMessage>)result;
-                return ok.Value.Success;
+                return ok.Success;
             }
             var bad = (Bad<TSuccess, TMessage>)result;
             throw new Exception(
