@@ -552,18 +552,18 @@ namespace RailwaySharp.ErrorHandling
                         var ok2 = (Ok<TSuccess, TMessage>)next;
                         return
                             new Ok<IEnumerable<TSuccess>, TMessage>(
-                                    Enumerable.Empty<TSuccess>().Concat(new [] { ok2.Value.Success }).Concat(ok1.Value.Success),
-                                    ok1.Value.Messages.Concat(ok2.Value.Messages));
+                                    Enumerable.Empty<TSuccess>().Concat(new [] { ok2.Success }).Concat(ok1.Success),
+                                    ok1.Messages.Concat(ok2.Messages));
                     }
                     if ((result.Tag == ResultType.Ok && next.Tag == ResultType.Bad)
                         || (result.Tag == ResultType.Bad && next.Tag == ResultType.Ok))
                     {
                         var m1 = result.Tag == ResultType.Ok
-                            ? ((Ok<IEnumerable<TSuccess>, TMessage>)result).Value.Messages
+                            ? ((Ok<IEnumerable<TSuccess>, TMessage>)result).Messages
                             : ((Bad<TSuccess, TMessage>)next).Messages;
                         var m2 = result.Tag == ResultType.Bad
                             ? ((Bad<IEnumerable<TSuccess>, TMessage>)result).Messages
-                            : ((Ok<TSuccess, TMessage>)next).Value.Messages;
+                            : ((Ok<TSuccess, TMessage>)next).Messages;
                         return new Bad<IEnumerable<TSuccess>, TMessage>(m1.Concat(m2));
                     }
                     var bad1 = (Bad<IEnumerable<TSuccess>, TMessage>)result;
