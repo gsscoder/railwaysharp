@@ -594,7 +594,7 @@ namespace RailwaySharp.ErrorHandling
             var ok = result as Ok<TSuccess, TMessage>;
             if (ok != null)
             {
-                ifSuccess(ok.Value.Success, ok.Value.Messages);
+                ifSuccess(ok.Success, ok.Messages);
                 return;
             }
             var bad = (Bad<TSuccess, TMessage>)result;
@@ -614,7 +614,7 @@ namespace RailwaySharp.ErrorHandling
             var ok = result as Ok<TSuccess, TMessage>;
             if (ok != null)
             {
-                return ifSuccess(ok.Value.Success, ok.Value.Messages);
+                return ifSuccess(ok.Success, ok.Messages);
             }
             var bad = (Bad<TSuccess, TMessage>)result;
             return ifFailure(bad.Messages);
