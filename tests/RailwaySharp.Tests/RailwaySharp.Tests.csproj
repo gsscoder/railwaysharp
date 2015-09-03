@@ -63,7 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\..\src\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="NightClubsValidation.cs" />
@@ -71,7 +71,7 @@
     <Compile Include="SimpleValidation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RailwaySharp\RailwaySharp.csproj">
+    <ProjectReference Include="..\..\src\RailwaySharp\RailwaySharp.csproj">
       <Project>{dde48d28-267e-48d5-85e9-afe8878a5721}</Project>
       <Name>RailwaySharp</Name>
     </ProjectReference>

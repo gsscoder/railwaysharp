@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp", "src\RailwaySharp\RailwaySharp.csproj", "{DDE48D28-267E-48D5-85E9-AFE8878A5721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp.Tests", "src\RailwaySharp.Tests\RailwaySharp.Tests.csproj", "{03188E48-64C0-466A-A9A4-8C70FCC7669A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp.Tests", "tests\RailwaySharp.Tests\RailwaySharp.Tests.csproj", "{03188E48-64C0-466A-A9A4-8C70FCC7669A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AF0F7840-5361-4D03-B065-5DC9C45F9F5B}"
 	ProjectSection(SolutionItems) = preProject
