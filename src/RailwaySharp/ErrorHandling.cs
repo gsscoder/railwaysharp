@@ -211,17 +211,22 @@ namespace RailwaySharp.ErrorHandling
 #endif 
     sealed class Ok<TSuccess, TMessage> : Result<TSuccess, TMessage>
     {
-        private readonly Tuple<TSuccess, TMessage> value;
+        private readonly Tuple<TSuccess, IEnumerable<TMessage>> value;
 
-        public Ok(TSuccess success, TMessage message)
+        public Ok(TSuccess success, IEnumerable<TMessage> messages)
             : base(ResultType.Ok)
         {
-            this.value = Tuple.Create(success, message);
+            this.value = Tuple.Create(success, messages);
         }
 
-        public OkPair<TSuccess, TMessage> Value
+        public TSuccess Success
         {
-            get { return value; }
+            get { return value.Item1; }
+        }
+
+        public IEnumerable<TMessage> Messages
+        {
+            get { return value.Item2; }
         }
     }
 
