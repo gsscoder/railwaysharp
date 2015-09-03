@@ -151,21 +151,6 @@ namespace RailwaySharp.ErrorHandling
     //    }
     //    #endregion
 
-    #region Helpers
-    static class TupleExtensions
-    {
-        public static T1 First<T1, T2>(this Tuple<T1, T2> tuple)
-        {
-            return tuple.Item1;
-        }
-
-        public static T2 Second<T1, T2>(this Tuple<T1, T2> tuple)
-        {
-            return tuple.Item2;
-        }
-    }
-    #endregion
-
 #if !ERRH_INTERNAL
     public
 #endif
@@ -428,7 +413,7 @@ namespace RailwaySharp.ErrorHandling
                     Environment.NewLine, msgs.Select(m => m.ToString())));
             };
 
-            return Either(OkPair.First, raiseExn, result);
+            return Either(TupleExtensions.First, raiseExn, result);
         }
 
         /// <summary>
