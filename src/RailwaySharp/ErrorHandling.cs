@@ -57,99 +57,99 @@ namespace RailwaySharp.ErrorHandling
 #endif
     #endregion
 
-    #region Ok Type Custom Tuple
-    /// <summary>
-    /// Tuple for <see cref="RailwaySharp.ErrorHandling.Ok{TSuccess, TMessage}"/> type. 
-    /// </summary>
-#if !ERRH_INTERNAL
-    public
-#endif
-    sealed class OkPair<TSuccess, TMessage> : IEquatable<OkPair<TSuccess, TMessage>>
-    {
-        private readonly TSuccess success;
-        private readonly IEnumerable<TMessage> messages;
+//    #region Ok Type Custom Tuple
+//    /// <summary>
+//    /// Tuple for <see cref="RailwaySharp.ErrorHandling.Ok{TSuccess, TMessage}"/> type. 
+//    /// </summary>
+//#if !ERRH_INTERNAL
+//    public
+//#endif
+//    sealed class OkPair<TSuccess, TMessage> : IEquatable<OkPair<TSuccess, TMessage>>
+//    {
+//        private readonly TSuccess success;
+//        private readonly IEnumerable<TMessage> messages;
 
-        internal OkPair(TSuccess success, IEnumerable<TMessage> messages)
-        {
-            this.success = success;
-            this.messages = messages;
-        }
+//        internal OkPair(TSuccess success, IEnumerable<TMessage> messages)
+//        {
+//            this.success = success;
+//            this.messages = messages;
+//        }
 
-        public TSuccess Success
-        {
-            get { return success; }
-        }
+//        public TSuccess Success
+//        {
+//            get { return success; }
+//        }
 
-        public IEnumerable<TMessage> Messages
-        {
-            get { return messages; }
-        }
+//        public IEnumerable<TMessage> Messages
+//        {
+//            get { return messages; }
+//        }
 
-        /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
-        /// <returns><value>true</value> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <value>false</value>.</returns>
-        public override bool Equals(object obj)
-        {
-            var other = obj as OkPair<TSuccess, TMessage>;
-            if (other != null)
-            {
-                return Equals(other);
-            }
+//        /// <summary>
+//        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.
+//        /// </summary>
+//        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
+//        /// <returns><value>true</value> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <value>false</value>.</returns>
+//        public override bool Equals(object obj)
+//        {
+//            var other = obj as OkPair<TSuccess, TMessage>;
+//            if (other != null)
+//            {
+//                return Equals(other);
+//            }
 
-            return base.Equals(obj);
-        }
+//            return base.Equals(obj);
+//        }
 
-        /// <summary>
-        /// Serves as a hash function for a particular type.
-        /// </summary>
-        /// <remarks>A hash code for the current <see cref="System.Object"/>.</remarks>
-        public override int GetHashCode()
-        {
-            return new { Success, Messages }.GetHashCode();
-        }
+//        /// <summary>
+//        /// Serves as a hash function for a particular type.
+//        /// </summary>
+//        /// <remarks>A hash code for the current <see cref="System.Object"/>.</remarks>
+//        public override int GetHashCode()
+//        {
+//            return new { Success, Messages }.GetHashCode();
+//        }
 
-        /// <summary>
-        /// Returns a value that indicates whether the current instance and a specified <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> have the same value.
-        /// </summary>
-        /// <param name="other">The <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> instance to compare.</param>
-        /// <returns><value>true</value> if this instance of <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
-        public bool Equals(OkPair<TSuccess, TMessage> other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
+//        /// <summary>
+//        /// Returns a value that indicates whether the current instance and a specified <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> have the same value.
+//        /// </summary>
+//        /// <param name="other">The <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> instance to compare.</param>
+//        /// <returns><value>true</value> if this instance of <see cref="RailwaySharp.ErrorHandling.OkPair{TSuccess, TMessage}"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+//        public bool Equals(OkPair<TSuccess, TMessage> other)
+//        {
+//            if (other == null)
+//            {
+//                return false;
+//            }
 
-            return Success.Equals(other.Success) && Messages.SequenceEqual(other.Messages);
-        }
-    }
+//            return Success.Equals(other.Success) && Messages.SequenceEqual(other.Messages);
+//        }
+//    }
 
-#if !ERRH_INTERNAL
-    public
-#endif
-    static class OkPair
-    {
-        public static OkPair<TSuccess, TMessage> Create<TSuccess, TMessage>(TSuccess success, IEnumerable<TMessage> messages)
-        {
-            if (success == null) throw new ArgumentNullException("success");
-            if (messages == null) throw new ArgumentNullException("messages");
+//#if !ERRH_INTERNAL
+//    public
+//#endif
+//    static class OkPair
+//    {
+//        public static OkPair<TSuccess, TMessage> Create<TSuccess, TMessage>(TSuccess success, IEnumerable<TMessage> messages)
+//        {
+//            if (success == null) throw new ArgumentNullException("success");
+//            if (messages == null) throw new ArgumentNullException("messages");
 
-            return new OkPair<TSuccess, TMessage>(success, messages);
-        }
+//            return new OkPair<TSuccess, TMessage>(success, messages);
+//        }
 
-        public static TSuccess First<TSuccess, TMessage>(OkPair<TSuccess, TMessage> okPair)
-        {
-            return okPair.Success;
-        }
+//        public static TSuccess First<TSuccess, TMessage>(OkPair<TSuccess, TMessage> okPair)
+//        {
+//            return okPair.Success;
+//        }
 
-        public static IEnumerable<TMessage> Second<TSuccess, TMessage>(OkPair<TSuccess, TMessage> okPair)
-        {
-            return okPair.Messages;
-        }
-    }
-    #endregion
+//        public static IEnumerable<TMessage> Second<TSuccess, TMessage>(OkPair<TSuccess, TMessage> okPair)
+//        {
+//            return okPair.Messages;
+//        }
+//    }
+//    #endregion
 
 #if !ERRH_INTERNAL
     public
