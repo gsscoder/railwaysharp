@@ -413,7 +413,7 @@ namespace RailwaySharp.ErrorHandling
                     Environment.NewLine, msgs.Select(m => m.ToString())));
             };
 
-            return Either(TupleExtensions.First, raiseExn, result);
+            return Either((succ, _) => succ, raiseExn, result);
         }
 
         /// <summary>
