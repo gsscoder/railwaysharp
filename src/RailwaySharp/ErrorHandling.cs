@@ -646,34 +646,36 @@ namespace RailwaySharp.ErrorHandling
         public static Result<IEnumerable<TSuccess>, TMessage> Collect<TSuccess, TMessage>(
             IEnumerable<Result<TSuccess, TMessage>> xs)
         {
-            return Lift(Enumerable.Reverse, xs.Fold<Result<TSuccess, TMessage>, Result<IEnumerable<TSuccess>, TMessage>>(
+            return Lift(Enumerable.Reverse,
+                xs.Aggregate<Result<TSuccess, TMessage>, Result<IEnumerable<TSuccess>, TMessage>, Result<IEnumerable<TSuccess>, TMessage>>(
+                null, 
                 (result, next) =>
                 {
                     if (result.Tag == ResultType.Ok && next.Tag == ResultType.Ok)
                     {
-                        var ok1 = (Ok<TSuccess, TMessage>)result;
+                        var ok1 = (Ok<IEnumerable<TSuccess>, TMessage>)result;
                         var ok2 = (Ok<TSuccess, TMessage>)next;
                         return
                             new Ok<IEnumerable<TSuccess>, TMessage>(
                                 new OkPair<IEnumerable<TSuccess>, TMessage>(
-                                    new[] { ok2.Value.Success, ok1.Value.Success },
+                                    Enumerable.Empty<TSuccess>().Concat(new [] { ok2.Value.Success }).Concat(ok1.Value.Success),
                                     ok1.Value.Messages.Concat(ok2.Value.Messages)));
                     }
                     if ((result.Tag == ResultType.Ok && next.Tag == ResultType.Bad)
                         || (result.Tag == ResultType.Bad && next.Tag == ResultType.Ok))
                     {
                         var m1 = result.Tag == ResultType.Ok
-                            ? ((Ok<TSuccess, TMessage>)result).Value.Messages
+                            ? ((Ok<IEnumerable<TSuccess>, TMessage>)result).Value.Messages
                             : ((Bad<TSuccess, TMessage>)next).Messages;
                         var m2 = result.Tag == ResultType.Bad
-                            ? ((Bad<TSuccess, TMessage>)result).Messages
+                            ? ((Bad<IEnumerable<TSuccess>, TMessage>)result).Messages
                             : ((Ok<TSuccess, TMessage>)next).Value.Messages;
                         return new Bad<IEnumerable<TSuccess>, TMessage>(m1.Concat(m2));
                     }
-                    var bad1 = (Bad<TSuccess, TMessage>)result;
+                    var bad1 = (Bad<IEnumerable<TSuccess>, TMessage>)result;
                     var bad2 = (Bad<TSuccess, TMessage>)next;
                     return new Bad<IEnumerable<TSuccess>, TMessage>(bad1.Messages.Concat(bad2.Messages));
-                }));
+                }, x => x));
         }
     }
 
