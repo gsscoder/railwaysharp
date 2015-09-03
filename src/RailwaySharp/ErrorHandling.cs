@@ -485,8 +485,8 @@ namespace RailwaySharp.ErrorHandling
                 var ok1 = (Ok<Func<TValue, TSuccess>, TMessage>)wrappedFunction;
                 var ok2 = (Ok<TValue, TMessage>)result;
 
-                return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(
-                    ok1.Value.Success(ok2.Value.Success), ok1.Value.Messages.Concat(ok2.Value.Messages)));
+                return new Ok<TSuccess, TMessage>(
+                    ok1.Success(ok2.Success), ok1.Messages.Concat(ok2.Messages));
             }
             if (wrappedFunction.Tag == ResultType.Bad && result.Tag == ResultType.Ok)
             {
