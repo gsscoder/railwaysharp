@@ -657,12 +657,12 @@ namespace RailwaySharp.ErrorHandling
             if (result.Tag == ResultType.Ok)
             {
                 var ok = (Ok<IEnumerable<Result<TSuccess, TMessage>>, TMessage>)result;
-                var values = ok.Value.Success;
+                var values = ok.Success;
                 var result1 = Collect(values);
                 if (result1.Tag == ResultType.Ok)
                 {
                     var ok1 = (Ok<IEnumerable<TSuccess>, TMessage>)result1;
-                    return new Ok<IEnumerable<TSuccess>, TMessage>(new OkPair<IEnumerable<TSuccess>, TMessage>(ok1.Value.Success, ok1.Value.Messages));
+                    return new Ok<IEnumerable<TSuccess>, TMessage>(ok1.Success, ok1.Messages);
                 }
                 var bad1 = (Bad<IEnumerable<TSuccess>, TMessage>)result1;
                 return new Bad<IEnumerable<TSuccess>, TMessage>(bad1.Messages);
