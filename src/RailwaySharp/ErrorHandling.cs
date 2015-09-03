@@ -448,8 +448,8 @@ namespace RailwaySharp.ErrorHandling
             Func<TValue, Result<TSuccess, TMessage>> func,
             Result<TValue, TMessage> result)
         {
-            Func<OkPair<TValue, TMessage>, Result<TSuccess, TMessage>> successFunc =
-                pair => MergeMessages(pair.Messages, func(pair.Success));
+            Func<TValue, IEnumerable<TMessage>, Result<TSuccess, TMessage>> successFunc =
+                (succ, msgs) => MergeMessages(msgs, func(succ));
 
             Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> failureFunc =
                 messages => new Bad<TSuccess, TMessage>(messages);
