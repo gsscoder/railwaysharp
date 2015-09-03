@@ -280,7 +280,7 @@ namespace RailwaySharp.ErrorHandling
         /// </summary>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value)
         {
-            return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>()));
+            return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace RailwaySharp.ErrorHandling
         /// </summary>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, TMessage message)
         {
-            return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, new[] { message }));
+            return new Ok<TSuccess, TMessage>(value, new[] { message });
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace RailwaySharp.ErrorHandling
         /// </summary>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, IEnumerable<TMessage> messages)
         {
-            return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, messages));
+            return new Ok<TSuccess, TMessage>(value, messages);
         }
 
         /// <summary>
@@ -307,8 +307,7 @@ namespace RailwaySharp.ErrorHandling
             try
             {
                 return new Ok<TSuccess, Exception>(
-                    new OkPair<TSuccess, Exception>(
-                        func(), Enumerable.Empty<Exception>()));
+                        func(), Enumerable.Empty<Exception>());
             }
             catch (Exception ex)
             {
@@ -331,7 +330,7 @@ namespace RailwaySharp.ErrorHandling
 #endif
         public static Result<TSuccess, TMessage> Ok<TSuccess, TMessage>(TSuccess value)
         {
-            return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>()));
+            return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
         }
 
         /// <summary>
@@ -342,7 +341,7 @@ namespace RailwaySharp.ErrorHandling
 #endif
         public static Result<TSuccess, TMessage> Pass<TSuccess, TMessage>(TSuccess value)
         {
-            return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>()));
+            return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
         }
 
         /// <summary>
@@ -353,7 +352,7 @@ namespace RailwaySharp.ErrorHandling
 #endif
         public static Result<TSuccess, TMessage> Warn<TSuccess, TMessage>(TMessage message, TSuccess value)
         {
-            return new Ok<TSuccess, TMessage>(new OkPair<TSuccess, TMessage>(value, new[] { message }));
+            return new Ok<TSuccess, TMessage>(value, new[] { message });
         }
 
         /// <summary>
@@ -430,7 +429,7 @@ namespace RailwaySharp.ErrorHandling
             Func<OkPair<TSuccess, TMessage>, Result<TSuccess, TMessage>> successFunc =
                 pair =>
                     new Ok<TSuccess, TMessage>(
-                        new OkPair<TSuccess, TMessage>(pair.Success, messages.Concat(pair.Messages)));
+                        pair.Success, messages.Concat(pair.Messages));
 
             Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> failureFunc =
                 errors => new Bad<TSuccess, TMessage>(errors.Concat(messages));
@@ -553,9 +552,8 @@ namespace RailwaySharp.ErrorHandling
                         var ok2 = (Ok<TSuccess, TMessage>)next;
                         return
                             new Ok<IEnumerable<TSuccess>, TMessage>(
-                                new OkPair<IEnumerable<TSuccess>, TMessage>(
                                     Enumerable.Empty<TSuccess>().Concat(new [] { ok2.Value.Success }).Concat(ok1.Value.Success),
-                                    ok1.Value.Messages.Concat(ok2.Value.Messages)));
+                                    ok1.Value.Messages.Concat(ok2.Value.Messages));
                     }
                     if ((result.Tag == ResultType.Ok && next.Tag == ResultType.Bad)
                         || (result.Tag == ResultType.Bad && next.Tag == ResultType.Ok))
