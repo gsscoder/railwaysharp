@@ -190,8 +190,8 @@ namespace RailwaySharp.ErrorHandling
                     var ok = (Ok<TSuccess, TMessage>)this;
                     return string.Format(
                         "OK: {0} - {1}",
-                        ok.Value.Success,
-                        string.Join(Environment.NewLine, ok.Value.Messages.Select(v => v.ToString())));
+                        ok.Success,
+                        string.Join(Environment.NewLine, ok.Messages.Select(v => v.ToString())));
                 default:
                     var bad = (Bad<TSuccess, TMessage>)this;
                     return string.Format(
@@ -384,14 +384,14 @@ namespace RailwaySharp.ErrorHandling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static TResult Either<TSuccess, TMessage, TResult>(
-            Func<OkPair<TSuccess, TMessage>, TResult> successFunc,
+            Func<TSuccess, IEnumerable<TMessage>, TResult> successFunc,
             Func<IEnumerable<TMessage>, TResult> failureFunc,
             Result<TSuccess, TMessage> trialResult)
         {
             var ok = trialResult as Ok<TSuccess, TMessage>;
             if (ok != null)
             {
-                return successFunc(ok.Value);
+                return successFunc(ok.Success, ok.Messages);
             }
             var bad = (Bad<TSuccess, TMessage>)trialResult;
             return failureFunc(bad.Messages);
