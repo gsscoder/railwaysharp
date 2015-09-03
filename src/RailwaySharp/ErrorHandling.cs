@@ -426,10 +426,10 @@ namespace RailwaySharp.ErrorHandling
             IEnumerable<TMessage> messages,
             Result<TSuccess, TMessage> result)
         {
-            Func<OkPair<TSuccess, TMessage>, Result<TSuccess, TMessage>> successFunc =
-                pair =>
+            Func<TSuccess, IEnumerable<TMessage>, Result<TSuccess, TMessage>> successFunc =
+                (succ, msgs) =>
                     new Ok<TSuccess, TMessage>(
-                        pair.Success, messages.Concat(pair.Messages));
+                        succ, messages.Concat(msgs));
 
             Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> failureFunc =
                 errors => new Bad<TSuccess, TMessage>(errors.Concat(messages));
