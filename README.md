@@ -27,7 +27,7 @@ See this [unit test](https://github.com/gsscoder/railwaysharp/blob/master/tests/
 
 ## Reference
 
-It allows source inclusion in other projects. Just drop `ErrorHandling.cs` in your project tree or reference it using [Paket](http://fsprojects.github.io/Paket/):
+It allows source inclusion in other projects. Just drop `ErrorHandling.cs` in your project tree or reference it using [Paket](http://fsprojects.github.io/Paket/).
 
 **paket.dependencies**
 ```
