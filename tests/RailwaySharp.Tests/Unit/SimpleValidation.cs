@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using RailwaySharp.ErrorHandling;
 
-namespace RailwaySharp.Tests
+namespace RailwaySharp.Tests.Unit
 {
     public class Request
     {
@@ -19,10 +16,12 @@ namespace RailwaySharp.Tests
     {
         public static Result<Request, string> ValidateInput(Request input)
         {
-            if (input.Name == "")
+            if (input.Name == "") {
                 return Result.FailWith<Request, string>("Name must not be blank");
-            if (input.EMail == "")
+            }
+            if (input.EMail == "") {
                 return Result.FailWith<Request, string>("Email must not be blank");
+            }
             return Result.Succeed<Request, string>(input);
 
         }
@@ -35,14 +34,14 @@ namespace RailwaySharp.Tests
         {
             var exn = new Exception("Hello World");
             var result = Result.Try<string>(() => { throw exn; });
-            exn.ShouldBeEquivalentTo(result.FailedWith().First());
+            exn.Should().Be(result.FailedWith().First());
         }
 
         [Fact]
         public void TryWillReturnValue()
         {
             var result = Result.Try(() => "hello world");
-            "hello world".ShouldBeEquivalentTo(result.SucceededWith());
+            "hello world".Should().Be(result.SucceededWith());
         }
     }
 
@@ -53,7 +52,7 @@ namespace RailwaySharp.Tests
         {
             var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
             var result = Validation.ValidateInput(request);
-            request.ShouldBeEquivalentTo(result.SucceededWith());
+            request.Should().Be(result.SucceededWith());
         }
     }
 
@@ -65,7 +64,7 @@ namespace RailwaySharp.Tests
             var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
             var result = Validation.ValidateInput(request);
             result.Match(
-               (x, msgs) => { request.ShouldBeEquivalentTo(x); },
+               (x, msgs) => { request.Should().Be(x); },
                msgs => { throw new Exception("wrong match case"); });
         }
 
@@ -76,7 +75,7 @@ namespace RailwaySharp.Tests
             var result = Validation.ValidateInput(request);
             result.Match(
                (x, msgs) => { throw new Exception("wrong match case"); },
-               msgs => { "Email must not be blank".ShouldBeEquivalentTo(msgs.ElementAt(0)); });
+               msgs => { "Email must not be blank".Should().Be(msgs.ElementAt(0)); });
         }
     }
 
@@ -92,7 +91,7 @@ namespace RailwaySharp.Tests
                  .Either(
                    (x, msgs) => x,
                    msgs => { throw new Exception("wrong match case"); });
-            request.ShouldBeEquivalentTo(result);
+            request.Should().Be(result);
         }
 
         [Fact]
@@ -105,7 +104,7 @@ namespace RailwaySharp.Tests
                    (x, msgs) => { throw new Exception("wrong match case"); },
                    msgs => msgs.ElementAt(0));
 
-            "Email must not be blank".ShouldBeEquivalentTo(result);
+            "Email must not be blank".Should().Be(result);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿//Use project level define(s) when referencing with Paket.
 //#define ERRH_INTERNAL // Uncomment this to set visibility to internal.
 //#define ERRH_DISABLE_INLINE_METHODS // Uncomment this to enable method inlining when compiling for >= NET 4.5.
-//#define ERRH_BUILTIN_TYPES // Uncomment this to use built-in Unit type, instead of extenral identical CSharpx.Unit.
+#define ERRH_BUILTIN_TYPES // Uncomment this to use built-in Unit type, instead of extenral identical CSharpx.Unit.
 
 using System;
 using System.Collections.Generic;
@@ -90,8 +90,7 @@ namespace RailwaySharp.ErrorHandling
 
         public override string ToString()
         {
-            switch (Tag)
-            {
+            switch (Tag) {
                 case ResultType.Ok:
                     var ok = (Ok<TSuccess, TMessage>)this;
                     return string.Format(
@@ -210,13 +209,11 @@ namespace RailwaySharp.ErrorHandling
         /// </summary>
         public static Result<TSuccess, Exception> Try<TSuccess>(Func<TSuccess> func)
         {
-            try
-            {
+            try {
                 return new Ok<TSuccess, Exception>(
                         func(), Enumerable.Empty<Exception>());
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 return new Bad<TSuccess, Exception>(
                     new[] { ex });
             }
@@ -295,8 +292,7 @@ namespace RailwaySharp.ErrorHandling
             Result<TSuccess, TMessage> trialResult)
         {
             var ok = trialResult as Ok<TSuccess, TMessage>;
-            if (ok != null)
-            {
+            if (ok != null) {
                 return successFunc(ok.Success, ok.Messages);
             }
             var bad = (Bad<TSuccess, TMessage>)trialResult;
@@ -386,27 +382,23 @@ namespace RailwaySharp.ErrorHandling
             Result<Func<TValue, TSuccess>, TMessage> wrappedFunction,
             Result<TValue, TMessage> result)
         {
-            if (wrappedFunction.Tag == ResultType.Ok && result.Tag == ResultType.Ok)
-            {
+            if (wrappedFunction.Tag == ResultType.Ok && result.Tag == ResultType.Ok) {
                 var ok1 = (Ok<Func<TValue, TSuccess>, TMessage>)wrappedFunction;
                 var ok2 = (Ok<TValue, TMessage>)result;
 
                 return new Ok<TSuccess, TMessage>(
                     ok1.Success(ok2.Success), ok1.Messages.Concat(ok2.Messages));
             }
-            if (wrappedFunction.Tag == ResultType.Bad && result.Tag == ResultType.Ok)
-            {
+            if (wrappedFunction.Tag == ResultType.Bad && result.Tag == ResultType.Ok) {
                 return new Bad<TSuccess, TMessage>(((Bad<TValue, TMessage>)result).Messages);
             }
-            if (wrappedFunction.Tag == ResultType.Ok && result.Tag == ResultType.Bad)
-            {
+            if (wrappedFunction.Tag == ResultType.Ok && result.Tag == ResultType.Bad) {
                 return new Bad<TSuccess, TMessage>(
                     ((Bad<TValue, TMessage>)result).Messages);
             }
 
             var bad1 = (Bad<Func<TValue, TSuccess>, TMessage>)wrappedFunction;
             var bad2 = (Bad<TValue, TMessage>)result;
-
             return new Bad<TSuccess, TMessage>(bad1.Messages.Concat(bad2.Messages));
         }
 
@@ -450,10 +442,8 @@ namespace RailwaySharp.ErrorHandling
             return Lift(Enumerable.Reverse,
                 xs.Aggregate<Result<TSuccess, TMessage>, Result<IEnumerable<TSuccess>, TMessage>, Result<IEnumerable<TSuccess>, TMessage>>(
                 null, 
-                (result, next) =>
-                {
-                    if (result.Tag == ResultType.Ok && next.Tag == ResultType.Ok)
-                    {
+                (result, next) => {
+                    if (result.Tag == ResultType.Ok && next.Tag == ResultType.Ok) {
                         var ok1 = (Ok<IEnumerable<TSuccess>, TMessage>)result;
                         var ok2 = (Ok<TSuccess, TMessage>)next;
                         return
@@ -462,8 +452,7 @@ namespace RailwaySharp.ErrorHandling
                                     ok1.Messages.Concat(ok2.Messages));
                     }
                     if ((result.Tag == ResultType.Ok && next.Tag == ResultType.Bad)
-                        || (result.Tag == ResultType.Bad && next.Tag == ResultType.Ok))
-                    {
+                        || (result.Tag == ResultType.Bad && next.Tag == ResultType.Ok)) {
                         var m1 = result.Tag == ResultType.Ok
                             ? ((Ok<IEnumerable<TSuccess>, TMessage>)result).Messages
                             : ((Bad<TSuccess, TMessage>)next).Messages;
@@ -472,8 +461,9 @@ namespace RailwaySharp.ErrorHandling
                             : ((Ok<TSuccess, TMessage>)next).Messages;
                         return new Bad<IEnumerable<TSuccess>, TMessage>(m1.Concat(m2));
                     }
+
                     var bad1 = (Bad<IEnumerable<TSuccess>, TMessage>)result;
-                    var bad2 = (Bad<TSuccess, TMessage>)next;
+                    var bad2 = (Bad<TSuccess, TMessage>)next;            
                     return new Bad<IEnumerable<TSuccess>, TMessage>(bad1.Messages.Concat(bad2.Messages));
                 }, x => x));
         }
@@ -498,11 +488,11 @@ namespace RailwaySharp.ErrorHandling
             Action<IEnumerable<TMessage>> ifFailure)
         {
             var ok = result as Ok<TSuccess, TMessage>;
-            if (ok != null)
-            {
+            if (ok != null) {
                 ifSuccess(ok.Success, ok.Messages);
                 return;
             }
+
             var bad = (Bad<TSuccess, TMessage>)result;
             ifFailure(bad.Messages);
         }
@@ -518,10 +508,10 @@ namespace RailwaySharp.ErrorHandling
             Func<IEnumerable<TMessage>, TResult> ifFailure)
         {
             var ok = result as Ok<TSuccess, TMessage>;
-            if (ok != null)
-            {
+            if (ok != null)  {
                 return ifSuccess(ok.Success, ok.Messages);
             }
+
             var bad = (Bad<TSuccess, TMessage>)result;
             return ifFailure(bad.Messages);
         }
@@ -560,13 +550,11 @@ namespace RailwaySharp.ErrorHandling
 #endif
         public static Result<IEnumerable<TSuccess>, TMessage> Flatten<TSuccess, TMessage>(this Result<IEnumerable<Result<TSuccess, TMessage>>, TMessage> result)
         {
-            if (result.Tag == ResultType.Ok)
-            {
+            if (result.Tag == ResultType.Ok) {
                 var ok = (Ok<IEnumerable<Result<TSuccess, TMessage>>, TMessage>)result;
                 var values = ok.Success;
                 var result1 = Collect(values);
-                if (result1.Tag == ResultType.Ok)
-                {
+                if (result1.Tag == ResultType.Ok) {
                     var ok1 = (Ok<IEnumerable<TSuccess>, TMessage>)result1;
                     return new Ok<IEnumerable<TSuccess>, TMessage>(ok1.Success, ok1.Messages);
                 }
@@ -633,8 +621,7 @@ namespace RailwaySharp.ErrorHandling
 #endif
         public static IEnumerable<TMessage> FailedWith<TSuccess, TMessage>(this Result<TSuccess, TMessage> result)
         {
-            if (result.Tag == ResultType.Ok)
-            {
+            if (result.Tag == ResultType.Ok) {
                 var ok = (Ok<TSuccess, TMessage>)result;
                 throw new Exception(
                     string.Format("Result was a success: {0} - {1}",
@@ -653,8 +640,7 @@ namespace RailwaySharp.ErrorHandling
 #endif
         public static TSuccess SucceededWith<TSuccess, TMessage>(this Result<TSuccess, TMessage> result)
         {
-            if (result.Tag == ResultType.Ok)
-            {
+            if (result.Tag == ResultType.Ok) {
                 var ok = (Ok<TSuccess, TMessage>)result;
                 return ok.Success;
             }

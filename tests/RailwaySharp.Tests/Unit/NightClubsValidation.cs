@@ -1,16 +1,13 @@
-﻿using System;
+﻿// Originally from https://github.com/fsprojects/fsharpx/blob/master/tests/FSharpx.CSharpTests/ValidationExample.cs.
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using RailwaySharp.ErrorHandling;
 using FluentAssertions;
+using RailwaySharp.ErrorHandling;
 
-namespace RailwaySharp.Tests
+namespace RailwaySharp.Tests.Unit
 {
-    // originally from https://github.com/fsprojects/fsharpx/blob/master/tests/FSharpx.CSharpTests/ValidationExample.cs
-
     enum Sobriety { Sober, Tipsy, Drunk, Paralytic, Unconscious }
     enum Gender { Male, Female }
 
@@ -34,26 +31,32 @@ namespace RailwaySharp.Tests
     {
         public static Result<Person, string> CheckAge(Person p)
         {
-            if (p.Age < 18)
+            if (p.Age < 18) {
                 return Result.FailWith<Person, string>("Too young!");
-            if (p.Age > 40)
+            }
+            if (p.Age > 40) {
                 return Result.FailWith<Person, string>("Too old!");
+            }
             return Result.Succeed<Person, string>(p);
         }
 
         public static Result<Person, string> CheckClothes(Person p)
         {
-            if (p.Gender == Gender.Male && !p.Clothes.Contains("Tie"))
+            if (p.Gender == Gender.Male && !p.Clothes.Contains("Tie")) {
                 return Result.FailWith<Person, string>("Smarten up!");
-            if (p.Gender == Gender.Female && p.Clothes.Contains("Trainers"))
+            }
+            if (p.Gender == Gender.Female && p.Clothes.Contains("Trainers")) {
                 return Result.FailWith<Person, string>("Wear high heels!");
+            }
             return Result.Succeed<Person, string>(p);
         }
 
         public static Result<Person, string> CheckSobriety(Person p)
         {
-            if (new[] { Sobriety.Drunk, Sobriety.Paralytic, Sobriety.Unconscious }.Contains(p.Sobriety))
+            if (new[] { Sobriety.Drunk, Sobriety.Paralytic, Sobriety.Unconscious }
+                .Contains(p.Sobriety)) {
                 return Result.FailWith<Person, string>("Sober up!");
+            }
             return Result.Succeed<Person, string>(p);
         }
     }
@@ -76,18 +79,18 @@ namespace RailwaySharp.Tests
         {
             var Dave = new Person(Gender.Male, 41, new List<string> { "Tie", "Jeans" }, Sobriety.Sober);
             var costDave = ClubbedToDeath.CostToEnter(Dave);
-            "Too old!".ShouldBeEquivalentTo(costDave.FailedWith().First());
+            "Too old!".Should().Be(costDave.FailedWith().First());
 
             var Ken = new Person(Gender.Male, 28, new List<string> { "Tie", "Shirt" }, Sobriety.Tipsy);
             var costKen = ClubbedToDeath.CostToEnter(Ken);
-            5m.ShouldBeEquivalentTo(costKen.SucceededWith());
+            5m.Should().Be(costKen.SucceededWith());
 
             var Ruby = new Person(Gender.Female, 25, new List<string> { "High heels" }, Sobriety.Tipsy);
             var costRuby = ClubbedToDeath.CostToEnter(Ruby);
             costRuby.Match(
                 (x, msgs) =>
                 {
-                    0m.ShouldBeEquivalentTo(x);
+                    0m.Should().Be(x);
                 },
                 msgs =>
                 {
@@ -96,7 +99,7 @@ namespace RailwaySharp.Tests
 
             var Ruby17 = new Person(Ruby.Gender, 17, Ruby.Clothes, Ruby.Sobriety);
             var costRuby17 = ClubbedToDeath.CostToEnter(Ruby17);
-            "Too young!".ShouldAllBeEquivalentTo(costRuby17.FailedWith().First());
+            "Too young!".Should().Be(costRuby17.FailedWith().First());
 
             var KenUnconscious = new Person(Ken.Gender, Ken.Age, Ken.Clothes, Sobriety.Unconscious);
             var costKenUnconscious = ClubbedToDeath.CostToEnter(KenUnconscious);
@@ -107,9 +110,8 @@ namespace RailwaySharp.Tests
                 },
                 msgs =>
                 {
-                    "Sober up!".ShouldBeEquivalentTo(msgs.First());
+                    "Sober up!".Should().Be(msgs.First());
                 });
         }
     }
 }
-
