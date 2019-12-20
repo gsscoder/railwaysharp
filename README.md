@@ -19,7 +19,7 @@ public static Result<Request, string> ValidateInput(Request input)
 var request = new Request { Name = "Giacomo", EMail = "gsscoder@gmail.com" };
 var result = Validation.ValidateInput(request);
 result.Match(
-    (x, msgs) => { Logic.SendMail(x.Email); },
+    (x, msgs) => { Logic.SendMail(x.EMail); },
     msgs => { Logic.HandleFailure(msgs) });
 ```
 See this [unit test](https://github.com/gsscoder/railwaysharp/blob/master/tests/RailwaySharp.Tests/Unit/SimpleValidation.cs) for more examples.
