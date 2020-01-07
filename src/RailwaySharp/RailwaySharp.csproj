@@ -10,7 +10,7 @@
     <Copyright>Copyright © Giacomo Stelluti Scala, 2015-2019</Copyright>
     <PackageProjectUrl>https://github.com/gsscoder/railwaysharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/gsscoder/railwaysharp</RepositoryUrl>
-    <Company />
+    <DefineConstants>ERRH_BUILTIN_TYPES</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
