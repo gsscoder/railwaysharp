@@ -42,8 +42,6 @@ It allows also source inclusion in other projects. Just drop `ErrorHandling.cs` 
 
 **paket.dependencies**
 ```
-source https://nuget.org/api/v2 
-
 github gsscoder/railwaysharp src/RailwaySharp/ErrorHandling.cs 
 ```
 **paket.references** (if you've a dir called `Infrastructure`)
