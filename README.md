@@ -2,6 +2,17 @@
 
 Native **C#** implementation of Railway-oriented programming. Inspired by [Chessie](https://github.com/fsprojects/Chessie).
 
+## Targets
+
+- .NET Standard 2.0
+- .NET Framework 4.0, 4.5, 4.6.1
+
+## Install via NuGet
+
+```sh
+$ dotnet add package RailwaySharp --version 1.0.0
+```
+
 ## At a glance
 
 ``` csharp
@@ -27,7 +38,7 @@ See this [unit test](https://github.com/gsscoder/railwaysharp/blob/master/tests/
 
 ## Reference
 
-It allows source inclusion in other projects. Just drop `ErrorHandling.cs` in your project tree or reference it using [Paket](http://fsprojects.github.io/Paket/).
+It allows also source inclusion in other projects. Just drop `ErrorHandling.cs` in your project tree or reference it using [Paket](http://fsprojects.github.io/Paket/).
 
 **paket.dependencies**
 ```
