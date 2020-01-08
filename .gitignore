@@ -1,8 +1,9 @@
-
 .DS_Store
 .vscode/
 .vs
 tools/
+.paket/
+paket.lock
 [Oo]bj/
 [Bb]in/
 .nuget/
