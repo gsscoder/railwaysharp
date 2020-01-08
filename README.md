@@ -50,7 +50,7 @@ github gsscoder/railwaysharp src/RailwaySharp/ErrorHandling.cs
 ```
 File:ErrorHandling.cs Infrastructure
 ```
-`ErrorHandling.cs` contains an internal `Unit` type, comment `ERRH_BUILTIN_TYPES` to use the (identical) one from [CSharpx](https://github.com/gsscoder/CSharpx) if already included.
+`ErrorHandling.cs` contains an internal `Unit` type, comment `ERRH_BUILTIN_TYPES` to use the (identical) one from [CSharpx](https://github.com/gsscoder/CSharpx) if already included. `ERRH_DISABLE_INLINE_METHODS` allows usage on .NET Framework <= 4.0.
 
 ## Async
 
