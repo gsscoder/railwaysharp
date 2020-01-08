@@ -1,4 +1,4 @@
-# RailwaySharp
+# <img src="/assets/icon.png" height="30px" alt="RailwaySharp Logo"> RailwaySharp
 
 Native **C#** implementation of Railway-oriented programming. Inspired by [Chessie](https://github.com/fsprojects/Chessie).
 
