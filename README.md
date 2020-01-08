@@ -18,10 +18,10 @@ $ dotnet add package RailwaySharp --version 1.0.0
 ``` csharp
 public static Result<Request, string> ValidateInput(Request input)
 {
-    if (input.Name == "") {
+    if (input.Name == string.Empty) {
         return Result.FailWith<Request, string>("Name must not be blank");
     }
-    if (input.EMail == "") {
+    if (input.EMail == string.Empty) {
         return Result.FailWith<Request, string>("Email must not be blank");
     }
     return Result.Succeed<Request, string>(input);
