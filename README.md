@@ -59,3 +59,7 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 ## Latest Changes
 
   - Ported to .NET Core.
+
+## Icon
+
+[Railway Crossing](https://thenounproject.com/search/?q=railway&i=716833) icon designed by Gan Khoon Lay from [The Noun Project](https://thenounproject.com/).
