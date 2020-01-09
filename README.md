@@ -10,7 +10,7 @@ Native **C#** implementation of Railway-oriented programming. Inspired by [Chess
 ## Install via NuGet
 
 ```sh
-$ dotnet add package RailwaySharp --version 1.0.0
+$ dotnet add package RailwaySharp --version 1.1.0
 ```
 
 ## At a glance
@@ -35,7 +35,6 @@ result.Match(
 ```
 See this [unit test](https://github.com/gsscoder/railwaysharp/blob/master/tests/RailwaySharp.Tests/Unit/SimpleValidation.cs) for more examples.
 
-
 ## Reference
 
 It allows also source inclusion in other projects. Just drop `ErrorHandling.cs` in your project tree or reference it using [Paket](http://fsprojects.github.io/Paket/).
@@ -48,7 +47,8 @@ github gsscoder/railwaysharp src/RailwaySharp/ErrorHandling.cs
 ```
 File:ErrorHandling.cs Infrastructure
 ```
-`ErrorHandling.cs` contains an internal `Unit` type, comment `ERRH_BUILTIN_TYPES` to use the (identical) one from [CSharpx](https://github.com/gsscoder/CSharpx) if already included. `ERRH_DISABLE_INLINE_METHODS` allows usage on .NET Framework <= 4.0.
+- Enabling `ERRH_ADD_MAYBE_METHODS` compilation constant will add `Maybe` type related methods (as defined in [CSharpx](https://github.com/gsscoder/csharpx). You will need at least `Maybe.cs` in your project.
+- Enabling `ERRH_ENABLE_INLINE_METHODS` will allow inlining of certain methods on targets that support it.
 
 ## Async
 

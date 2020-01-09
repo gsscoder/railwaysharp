@@ -5,12 +5,11 @@
     <OutputType>Library</OutputType>
     <TargetFrameworks>netstandard2.0;net40;net45;net461</TargetFrameworks>
     <Title>.NET library for Railway-oriented programming</Title>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>gsscoder</Authors>
     <Copyright>Copyright © Giacomo Stelluti Scala, 2015-2019</Copyright>
     <PackageProjectUrl>https://github.com/gsscoder/railwaysharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/gsscoder/railwaysharp</RepositoryUrl>
-    <DefineConstants>ERRH_BUILTIN_TYPES</DefineConstants>
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
@@ -23,8 +22,9 @@
     <OutputPath>../../artifacts/RailwaySharp/Release</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
-    <DefineConstants>ERRH_BUILTIN_TYPES;ERRH_DISABLE_INLINE_METHODS</DefineConstants>
+  <PropertyGroup
+      Condition="'$(Framework)' == 'netstandard2.0' Or '$(Framework)' == 'net45' Or '$(Framework)' == 'net461'">
+    <DefineConstants>ERRH_ENABLE_INLINE_METHODS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
