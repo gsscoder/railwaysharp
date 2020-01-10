@@ -10,7 +10,7 @@ Native **C#** implementation of Railway-oriented programming. Inspired by [Chess
 ## Install via NuGet
 
 ```sh
-$ dotnet add package RailwaySharp --version 1.1.0
+$ dotnet add package RailwaySharp --version 1.1.2
 ```
 
 ## At a glance
