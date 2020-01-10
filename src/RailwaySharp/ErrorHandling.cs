@@ -267,8 +267,7 @@ namespace RailwaySharp.ErrorHandling
             if (successFunc == null) throw new ArgumentException(nameof(successFunc));
             if (failureFunc == null) throw new ArgumentException(nameof(failureFunc));
 
-            var ok = trialResult as Ok<TSuccess, TMessage>;
-            if (ok != null) {
+            if (trialResult is Ok<TSuccess, TMessage> ok) {
                 return successFunc(ok.Success, ok.Messages);
             }
             var bad = (Bad<TSuccess, TMessage>)trialResult;
@@ -350,7 +349,7 @@ namespace RailwaySharp.ErrorHandling
         {
             return Bind(x => x, result);
         }
-        
+
         /// <summary>
         /// If the wrapped function is a success and the given result is a success the function is applied on the value. 
         /// Otherwise the exisiting error messages are propagated.
@@ -423,14 +422,15 @@ namespace RailwaySharp.ErrorHandling
         {
             return Lift(Enumerable.Reverse,
                 xs.Aggregate<Result<TSuccess, TMessage>, Result<IEnumerable<TSuccess>, TMessage>, Result<IEnumerable<TSuccess>, TMessage>>(
-                null, 
-                (result, next) => {
+                null,
+                (result, next) =>
+                {
                     if (result.Tag == ResultType.Ok && next.Tag == ResultType.Ok) {
                         var ok1 = (Ok<IEnumerable<TSuccess>, TMessage>)result;
                         var ok2 = (Ok<TSuccess, TMessage>)next;
                         return
                             new Ok<IEnumerable<TSuccess>, TMessage>(
-                                    Enumerable.Empty<TSuccess>().Concat(new [] { ok2.Success }).Concat(ok1.Success),
+                                    Enumerable.Empty<TSuccess>().Concat(new[] { ok2.Success }).Concat(ok1.Success),
                                     ok1.Messages.Concat(ok2.Messages));
                     }
                     if ((result.Tag == ResultType.Ok && next.Tag == ResultType.Bad)
@@ -445,7 +445,7 @@ namespace RailwaySharp.ErrorHandling
                     }
 
                     var bad1 = (Bad<IEnumerable<TSuccess>, TMessage>)result;
-                    var bad2 = (Bad<TSuccess, TMessage>)next;            
+                    var bad2 = (Bad<TSuccess, TMessage>)next;
                     return new Bad<IEnumerable<TSuccess>, TMessage>(bad1.Messages.Concat(bad2.Messages));
                 }, x => x));
         }
@@ -472,8 +472,7 @@ namespace RailwaySharp.ErrorHandling
             if (ifSuccess == null) throw new ArgumentException(nameof(ifSuccess));
             if (ifFailure == null) throw new ArgumentException(nameof(ifFailure));
 
-            var ok = result as Ok<TSuccess, TMessage>;
-            if (ok != null) {
+            if (result is Ok<TSuccess, TMessage> ok) {
                 ifSuccess(ok.Success, ok.Messages);
                 return;
             }
