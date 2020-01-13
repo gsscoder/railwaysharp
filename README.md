@@ -58,6 +58,7 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 ## Latest Changes
 
 - Ported to .NET Core.
+- Compiles for .NET Framework targets.
 
 ## Related Projects
 
