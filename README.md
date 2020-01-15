@@ -4,7 +4,7 @@ Native **C#** implementation of Railway-oriented programming. Inspired by [Chess
 
 ## Reference
 
-It allows also source inclusion in other projects. Just drop `ErrorHandling.cs` in your project tree or reference it using [Paket](http://fsprojects.github.io/Paket/).
+It allows also source inclusion in other projects. Just drop `ErrorHandling.cs` in your project tree or reference it using [Paket](http://fsprojects.github.io/Paket/):
 
 **paket.dependencies**
 ```
@@ -62,7 +62,9 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 
 ## Related Projects
 
+Projects conceived to be included as source:
 - [CSharpx](https://github.com/gsscoder/csharpx)
+- [Cataloq](https://github.com/gsscoder/cataloq)
 
 ## Icon
 
