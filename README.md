@@ -62,9 +62,7 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 
 ## Related Projects
 
-Projects conceived to be included as source:
 - [CSharpx](https://github.com/gsscoder/csharpx)
-- [Cataloq](https://github.com/gsscoder/cataloq)
 
 ## Icon
 
