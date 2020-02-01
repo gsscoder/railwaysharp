@@ -21,27 +21,15 @@ namespace RailwaySharp
         Bad
     }
 
-    /// <summary>
-    /// Represents the result of a computation.
-    /// </summary>
-    /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-    /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+    /// <summary>Represents the result of a computation.</summary>
 #if !ERRH_INTERNAL
     public
 #endif 
     abstract class Result<TSuccess, TMessage>
     {
-        private readonly ResultType _tag;
-
-        protected Result(ResultType tag)
-        {
-            _tag = tag;
-        }
-
-        public ResultType Tag
-        {
-            get { return _tag; }
-        }
+        readonly ResultType _tag;
+        protected Result(ResultType tag) => _tag = tag;
+        public ResultType Tag => _tag;
 
         public override string ToString()
         {
@@ -61,17 +49,13 @@ namespace RailwaySharp
         }
     }
 
-    /// <summary>
-    /// Represents the result of a successful computation.
-    /// </summary>
-    /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-    /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+    /// <summary>Represents the result of a successful computation.</summary>
 #if !ERRH_INTERNAL
     public
 #endif 
     sealed class Ok<TSuccess, TMessage> : Result<TSuccess, TMessage>
     {
-        private readonly Tuple<TSuccess, IEnumerable<TMessage>> _value;
+        readonly Tuple<TSuccess, IEnumerable<TMessage>> _value;
 
         public Ok(TSuccess success, IEnumerable<TMessage> messages)
             : base(ResultType.Ok)
@@ -81,28 +65,18 @@ namespace RailwaySharp
             _value = Tuple.Create(success, messages);
         }
 
-        public TSuccess Success
-        {
-            get { return _value.Item1; }
-        }
+        public TSuccess Success => _value.Item1;
 
-        public IEnumerable<TMessage> Messages
-        {
-            get { return _value.Item2; }
-        }
+        public IEnumerable<TMessage> Messages => _value.Item2;
     }
 
-    /// <summary>
-    /// Represents the result of a failed computation.
-    /// </summary>
-    /// <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
-    /// <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+    /// <summary>Represents the result of a failed computation.</summary>
 #if !ERRH_INTERNAL
     public
 #endif
     sealed class Bad<TSuccess, TMessage> : Result<TSuccess, TMessage>
     {
-        private readonly IEnumerable<TMessage> _messages;
+        readonly IEnumerable<TMessage> _messages;
 
         public Bad(IEnumerable<TMessage> messages)
             : base(ResultType.Bad)
@@ -112,10 +86,7 @@ namespace RailwaySharp
             _messages = messages;
         }
 
-        public IEnumerable<TMessage> Messages
-        {
-            get { return _messages; }
-        }
+        public IEnumerable<TMessage> Messages => _messages;
     }
 
 #if !ERRH_INTERNAL
@@ -123,9 +94,7 @@ namespace RailwaySharp
 #endif
     static class Result
     {
-        /// <summary>
-        /// Creates a Failure result with the given messages.
-        /// </summary>
+        /// <summary>Creates a Failure result with the given messages.</summary>
         public static Result<TSuccess, TMessage> FailWith<TSuccess, TMessage>(IEnumerable<TMessage> messages)
         {
             if (messages == null) throw new ArgumentException(nameof(messages));
@@ -133,9 +102,7 @@ namespace RailwaySharp
             return new Bad<TSuccess, TMessage>(messages);
         }
 
-        /// <summary>
-        /// Creates a Failure result with the given message.
-        /// </summary>
+        /// <summary>Creates a Failure result with the given message.</summary>
         public static Result<TSuccess, TMessage> FailWith<TSuccess, TMessage>(TMessage message)
         {
             if (message == null) throw new ArgumentException(nameof(message));
@@ -143,17 +110,13 @@ namespace RailwaySharp
             return new Bad<TSuccess, TMessage>(new[] { message });
         }
 
-        /// <summary>
-        /// Creates a Success result with the given value.
-        /// </summary>
+        /// <summary>Creates a Success result with the given value.</summary>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value)
         {
             return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
         }
 
-        /// <summary>
-        /// Creates a Success result with the given value and the given message.
-        /// </summary>
+        /// <summary>Creates a Success result with the given value and the given message.</summary>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, TMessage message)
         {
             if (message == null) throw new ArgumentException(nameof(message));
@@ -161,9 +124,7 @@ namespace RailwaySharp
             return new Ok<TSuccess, TMessage>(value, new[] { message });
         }
 
-        /// <summary>
-        /// Creates a Success result with the given value and the given messages.
-        /// </summary>
+        /// <summary>Creates a Success result with the given value and the given messages.</summary>
         public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, IEnumerable<TMessage> messages)
         {
             if (messages == null) throw new ArgumentException(nameof(messages));
@@ -171,9 +132,7 @@ namespace RailwaySharp
             return new Ok<TSuccess, TMessage>(value, messages);
         }
 
-        /// <summary>
-        /// Executes the given function on a given success or captures the failure.
-        /// </summary>
+        /// <summary>Executes the given function on a given success or captures the failure.</summary>
         public static Result<TSuccess, Exception> Try<TSuccess>(Func<TSuccess> func)
         {
             if (func == null) throw new ArgumentException(nameof(func));
@@ -194,44 +153,33 @@ namespace RailwaySharp
 #endif
     static class Trial
     {
-        /// <summary>
-        /// Wraps a value in a Success.
-        /// </summary>
+        /// <summary>Wraps a value in a Success.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static Result<TSuccess, TMessage> Ok<TSuccess, TMessage>(TSuccess value)
-        {
-            return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
-        }
+        public static Result<TSuccess, TMessage> Ok<TSuccess, TMessage>(TSuccess value) =>
+            new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
 
-        /// <summary>
-        /// Wraps a value in a Success.
-        /// </summary>
+        /// <summary>Wraps a value in a Success.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static Result<TSuccess, TMessage> Pass<TSuccess, TMessage>(TSuccess value)
-        {
-            return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
-        }
+        public static Result<TSuccess, TMessage> Pass<TSuccess, TMessage>(TSuccess value) =>
+            new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
 
-        /// <summary>
-        /// Wraps a value in a Success and adds a message.
-        /// </summary>
+        /// <summary>Wraps a value in a Success and adds a message.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static Result<TSuccess, TMessage> Warn<TSuccess, TMessage>(TMessage message, TSuccess value)
+        public static Result<TSuccess, TMessage> Warn<TSuccess, TMessage>(
+            TMessage message, TSuccess value)
         {
             if (message == null) throw new ArgumentException(nameof(message));
 
             return new Ok<TSuccess, TMessage>(value, new[] { message });
         }
 
-        /// <summary>
-        /// Wraps a message in a Failure.
-        /// </summary>
+        /// <summary>Wraps a message in a Failure.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -242,9 +190,7 @@ namespace RailwaySharp
             return new Bad<TSuccess, TMessage>(new[] { message });
         }
 
-        /// <summary>
-        /// Returns true if the result was not successful.
-        /// </summary>
+        /// <summary>Returns true if the result was not successful.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -253,16 +199,15 @@ namespace RailwaySharp
             return result.Tag == ResultType.Bad;
         }
 
-        /// <summary>
-        /// Takes a Result and maps it with successFunc if it is a Success otherwise it maps it with failureFunc.
-        /// </summary>
+        /// <summary>Takes a Result and maps it with successFunc if it is a Success otherwise it maps
+        /// it with failureFunc.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static TResult Either<TSuccess, TMessage, TResult>(
+            Result<TSuccess, TMessage> trialResult,
             Func<TSuccess, IEnumerable<TMessage>, TResult> successFunc,
-            Func<IEnumerable<TMessage>, TResult> failureFunc,
-            Result<TSuccess, TMessage> trialResult)
+            Func<IEnumerable<TMessage>, TResult> failureFunc)
         {
             if (successFunc == null) throw new ArgumentException(nameof(successFunc));
             if (failureFunc == null) throw new ArgumentException(nameof(failureFunc));
@@ -274,34 +219,29 @@ namespace RailwaySharp
             return failureFunc(bad.Messages);
         }
 
-        /// <summary>
-        /// If the given result is a Success the wrapped value will be returned. 
-        /// Otherwise the function throws an exception with Failure message of the result.
-        /// </summary>
+        /// <summary>If the given result is a Success the wrapped value will be returned. Otherwise
+        /// the function throws an exception with Failure message of the result.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static TSuccess ReturnOrFail<TSuccess, TMessage>(Result<TSuccess, TMessage> result)
         {
             Func<IEnumerable<TMessage>, TSuccess> raiseExn = msgs =>
-            {
-                throw new Exception(
-                    string.Join(
-                    Environment.NewLine, msgs.Select(m => m.ToString())));
-            };
-
-            return Either((succ, _) => succ, raiseExn, result);
+                {
+                    throw new Exception(
+                        string.Join(
+                        Environment.NewLine, msgs.Select(m => m.ToString())));
+                };
+            return Either(result, (succ, _) => succ, raiseExn);
         }
 
-        /// <summary>
-        /// Appends the given messages with the messages in the given result.
-        /// </summary>
+        /// <summary>Appends the given messages with the messages in the given result.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Result<TSuccess, TMessage> MergeMessages<TSuccess, TMessage>(
-            IEnumerable<TMessage> messages,
-            Result<TSuccess, TMessage> result)
+            Result<TSuccess, TMessage> result,
+            IEnumerable<TMessage> messages)
         {
             if (messages == null) throw new ArgumentException(nameof(messages));
 
@@ -309,57 +249,44 @@ namespace RailwaySharp
                 (succ, msgs) =>
                     new Ok<TSuccess, TMessage>(
                         succ, messages.Concat(msgs));
-
             Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> failureFunc =
                 errors => new Bad<TSuccess, TMessage>(errors.Concat(messages));
-
-            return Either(successFunc, failureFunc, result);
+            return Either(result, successFunc, failureFunc);
         }
 
-        /// <summary>
-        /// If the result is a Success it executes the given function on the value.
-        /// Otherwise the exisiting failure is propagated.
-        /// </summary>
+        /// <summary>If the result is a Success it executes the given function on the value.
+        /// Otherwise the exisiting failure is propagated.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Result<TSuccess, TMessage> Bind<TValue, TSuccess, TMessage>(
-            Func<TValue, Result<TSuccess, TMessage>> func,
-            Result<TValue, TMessage> result)
+            Result<TValue, TMessage> result,
+            Func<TValue, Result<TSuccess, TMessage>> func)
         {
             if (func == null) throw new ArgumentException(nameof(func));
 
             Func<TValue, IEnumerable<TMessage>, Result<TSuccess, TMessage>> successFunc =
-                (succ, msgs) => MergeMessages(msgs, func(succ));
-
+                (succ, msgs) => MergeMessages(func(succ), msgs);
             Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> failureFunc =
                 messages => new Bad<TSuccess, TMessage>(messages);
-
-            return Either(successFunc, failureFunc, result);
+            return Either(result, successFunc, failureFunc);
         }
 
-        /// <summary>
-        /// Flattens a nested result given the Failure types are equal.
-        /// </summary>
+        /// <summary>Flattens a nested result given the Failure types are equal.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Result<TSuccess, TMessage> Flatten<TSuccess, TMessage>(
-            Result<Result<TSuccess, TMessage>, TMessage> result)
-        {
-            return Bind(x => x, result);
-        }
+            Result<Result<TSuccess, TMessage>, TMessage> result) => Bind(result, x => x);
 
-        /// <summary>
-        /// If the wrapped function is a success and the given result is a success the function is applied on the value. 
-        /// Otherwise the exisiting error messages are propagated.
-        /// </summary>
+        /// <summary>If the wrapped function is a success and the given result is a success the function
+        /// is applied on the value. Otherwise the exisiting error messages are propagated.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Result<TSuccess, TMessage> Apply<TValue, TSuccess, TMessage>(
-            Result<Func<TValue, TSuccess>, TMessage> wrappedFunction,
-            Result<TValue, TMessage> result)
+            Result<TValue, TMessage> result,
+            Result<Func<TValue, TSuccess>, TMessage> wrappedFunction)
         {
             if (wrappedFunction == null) throw new ArgumentException(nameof(wrappedFunction));
 
@@ -383,44 +310,33 @@ namespace RailwaySharp
             return new Bad<TSuccess, TMessage>(bad1.Messages.Concat(bad2.Messages));
         }
 
-        /// <summary>
-        /// Lifts a function into a Result container and applies it on the given result.
-        /// </summary>
+        /// <summary>Lifts a function into a Result container and applies it on the given
+        /// result.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Result<TSuccess, TMessage> Lift<TValue, TSuccess, TMessage>(
             Func<TValue, TSuccess> func,
-            Result<TValue, TMessage> result)
-        {
-            return Apply(Ok<Func<TValue, TSuccess>, TMessage>(func), result);
-        }
+            Result<TValue, TMessage> result) => Apply(result, Ok<Func<TValue, TSuccess>, TMessage>(func));
 
-        /// <summary>
-        /// Promote a function to a monad/applicative, scanning the monadic/applicative arguments from left to right.
-        /// </summary>
+        /// <summary>Promotes a function to a monad/applicative, scanning the monadic/applicative
+        /// arguments from left to right.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Result<TSuccess1, TMessage1> Lift2<TSuccess, TMessage, TSuccess1, TMessage1>(
             Func<TSuccess, Func<TMessage, TSuccess1>> func,
             Result<TSuccess, TMessage1> first,
-            Result<TMessage, TMessage1> second)
-        {
-            return Apply(Lift(func, first), second);
-        }
+            Result<TMessage, TMessage1> second) => Apply(second, Lift(func, first));
 
-        /// <summary>
-        /// Collects a sequence of Results and accumulates their values.
-        /// If the sequence contains an error the error will be propagated.
-        /// </summary>
+        /// <summary>Collects a sequence of Results and accumulates their values. If the sequence
+        /// contains an error the error will be propagated.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Result<IEnumerable<TSuccess>, TMessage> Collect<TSuccess, TMessage>(
-            IEnumerable<Result<TSuccess, TMessage>> xs)
-        {
-            return Lift(Enumerable.Reverse,
+            IEnumerable<Result<TSuccess, TMessage>> xs) =>
+            Lift(Enumerable.Reverse,
                 xs.Aggregate<Result<TSuccess, TMessage>, Result<IEnumerable<TSuccess>, TMessage>, Result<IEnumerable<TSuccess>, TMessage>>(
                 null,
                 (result, next) =>
@@ -443,25 +359,19 @@ namespace RailwaySharp
                             : ((Ok<TSuccess, TMessage>)next).Messages;
                         return new Bad<IEnumerable<TSuccess>, TMessage>(m1.Concat(m2));
                     }
-
                     var bad1 = (Bad<IEnumerable<TSuccess>, TMessage>)result;
                     var bad2 = (Bad<TSuccess, TMessage>)next;
                     return new Bad<IEnumerable<TSuccess>, TMessage>(bad1.Messages.Concat(bad2.Messages));
                 }, x => x));
-        }
     }
 
-    /// <summary>
-    /// Extensions methods for easier usage.
-    /// </summary>
+    /// <summary>Extensions methods for easier usage.</summary>
 #if !ERRH_INTERNAL
     public
 #endif
     static class ResultExtensions
     {
-        /// <summary>
-        /// Allows pattern matching on Results.
-        /// </summary>
+        /// <summary>Allows pattern matching on Results.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -469,6 +379,7 @@ namespace RailwaySharp
             Action<TSuccess, IEnumerable<TMessage>> ifSuccess,
             Action<IEnumerable<TMessage>> ifFailure)
         {
+            if (result == null) throw new ArgumentNullException(nameof(result));
             if (ifSuccess == null) throw new ArgumentException(nameof(ifSuccess));
             if (ifFailure == null) throw new ArgumentException(nameof(ifFailure));
 
@@ -476,7 +387,6 @@ namespace RailwaySharp
                 ifSuccess(ok.Success, ok.Messages);
                 return;
             }
-
             var bad = (Bad<TSuccess, TMessage>)result;
             ifFailure(bad.Messages);
         }
@@ -491,7 +401,7 @@ namespace RailwaySharp
             Func<TSuccess, IEnumerable<TMessage>, TResult> ifSuccess,
             Func<IEnumerable<TMessage>, TResult> ifFailure)
         {
-            return Trial.Either(ifSuccess, ifFailure, result);
+            return Trial.Either(result, ifSuccess, ifFailure);
         }
 
         /// <summary>
@@ -553,7 +463,7 @@ namespace RailwaySharp
         public static Result<TResult, TMessage> SelectMany<TSuccess, TMessage, TResult>(this Result<TSuccess, TMessage> result,
             Func<TSuccess, Result<TResult, TMessage>> func)
         {
-            return Trial.Bind(func, result);
+            return Trial.Bind(result, func);
         }
 
         /// <summary>
@@ -578,7 +488,7 @@ namespace RailwaySharp
                 Result<TValue, TMessage>,
                 Result<TResult, TMessage>
             > liftedMapper = (a, b) => Trial.Lift2(curriedMapper, a, b);
-            var v = Trial.Bind(func, result);
+            var v = Trial.Bind(result, func);
             return liftedMapper(result, v);
         }
 
