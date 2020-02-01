@@ -196,6 +196,8 @@ namespace RailwaySharp
 #endif
         public static bool Failed<TSuccess, TMessage>(Result<TSuccess, TMessage> result)
         {
+            if (result == null) throw new ArgumentNullException(nameof(result));
+
             return result.Tag == ResultType.Bad;
         }
 
@@ -205,17 +207,18 @@ namespace RailwaySharp
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static TResult Either<TSuccess, TMessage, TResult>(
-            Result<TSuccess, TMessage> trialResult,
+            Result<TSuccess, TMessage> result,
             Func<TSuccess, IEnumerable<TMessage>, TResult> successFunc,
             Func<IEnumerable<TMessage>, TResult> failureFunc)
         {
+            if (result == null) throw new ArgumentNullException(nameof(result));
             if (successFunc == null) throw new ArgumentException(nameof(successFunc));
             if (failureFunc == null) throw new ArgumentException(nameof(failureFunc));
 
-            if (trialResult is Ok<TSuccess, TMessage> ok) {
+            if (result is Ok<TSuccess, TMessage> ok) {
                 return successFunc(ok.Success, ok.Messages);
             }
-            var bad = (Bad<TSuccess, TMessage>)trialResult;
+            var bad = (Bad<TSuccess, TMessage>)result;
             return failureFunc(bad.Messages);
         }
 
@@ -226,6 +229,8 @@ namespace RailwaySharp
 #endif
         public static TSuccess ReturnOrFail<TSuccess, TMessage>(Result<TSuccess, TMessage> result)
         {
+            if (result == null) throw new ArgumentNullException(nameof(result));
+
             Func<IEnumerable<TMessage>, TSuccess> raiseExn = msgs =>
                 {
                     throw new Exception(
@@ -243,6 +248,7 @@ namespace RailwaySharp
             Result<TSuccess, TMessage> result,
             IEnumerable<TMessage> messages)
         {
+            if (result == null) throw new ArgumentNullException(nameof(result));
             if (messages == null) throw new ArgumentException(nameof(messages));
 
             Func<TSuccess, IEnumerable<TMessage>, Result<TSuccess, TMessage>> successFunc =
@@ -263,6 +269,7 @@ namespace RailwaySharp
             Result<TValue, TMessage> result,
             Func<TValue, Result<TSuccess, TMessage>> func)
         {
+            if (result == null) throw new ArgumentNullException(nameof(result));
             if (func == null) throw new ArgumentException(nameof(func));
 
             Func<TValue, IEnumerable<TMessage>, Result<TSuccess, TMessage>> successFunc =
