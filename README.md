@@ -59,6 +59,7 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 
 - Ported to .NET Core.
 - Compiles for .NET Framework targets.
+- Namespace set to `RailwaySharp`.
 
 ## Related Projects
 

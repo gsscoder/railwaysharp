@@ -1,4 +1,5 @@
-﻿// Originally from https://github.com/fsprojects/fsharpx/blob/master/tests/FSharpx.CSharpTests/ValidationExample.cs.
+﻿// From https://github.com/fsprojects/fsharpx/blob/master/tests/FSharpx.CSharpTests/ValidationExample.cs.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
