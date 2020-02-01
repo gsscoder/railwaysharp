@@ -251,13 +251,9 @@ namespace RailwaySharp
             if (result == null) throw new ArgumentNullException(nameof(result));
             if (messages == null) throw new ArgumentException(nameof(messages));
 
-            Func<TSuccess, IEnumerable<TMessage>, Result<TSuccess, TMessage>> successFunc =
-                (succ, msgs) =>
-                    new Ok<TSuccess, TMessage>(
-                        succ, messages.Concat(msgs));
-            Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> failureFunc =
-                errors => new Bad<TSuccess, TMessage>(errors.Concat(messages));
-            return Either(result, successFunc, failureFunc);
+            return Either<TSuccess, TMessage, Result<TSuccess, TMessage>>(result,
+                (succ, msgs) => new Ok<TSuccess, TMessage>(succ, messages.Concat(msgs)),
+                errors => new Bad<TSuccess, TMessage>(errors.Concat(messages)));
         }
 
         /// <summary>If the result is a Success it executes the given function on the value.
