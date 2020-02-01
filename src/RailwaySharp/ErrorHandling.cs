@@ -542,7 +542,7 @@ namespace RailwaySharp
             if (result == null) throw new ArgumentNullException(nameof(result));
 
             return result.Tag == ResultType.Ok
-                   ? Maybe.Just(((Ok<TSuccess, TMessage>)result).Success);
+                   ? Maybe.Just(((Ok<TSuccess, TMessage>)result).Success)
                    : Maybe.Nothing<TSuccess>();
         }
 #endif
