@@ -233,13 +233,11 @@ namespace RailwaySharp
         {
             if (result == null) throw new ArgumentNullException(nameof(result));
 
-            Func<IEnumerable<TMessage>, TSuccess> raiseExn = msgs =>
-                {
-                    throw new Exception(
-                        string.Join(
-                        Environment.NewLine, msgs.Select(m => m.ToString())));
-                };
-            return Either(result, (succ, _) => succ, raiseExn);
+            return Either(result, (succ, _) => succ, msgs =>
+                throw new Exception(
+                            string.Join(
+                            Environment.NewLine, msgs.Select(m => m.ToString())))
+                );
         }
 
         /// <summary>Appends the given messages with the messages in the given result.</summary>
