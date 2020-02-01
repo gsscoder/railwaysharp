@@ -48,7 +48,7 @@ public class SimpleValidation
     [Fact]
     public void CanCreateSuccess()
     {
-        var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
+        var request = new Request { Name = "Giacomo", EMail = "mail@support.com" };
         var result = Validation.ValidateInput(request);
         request.Should().Be(result.SucceededWith());
     }
@@ -59,7 +59,7 @@ public class SimplePatternMatching
     [Fact]
     public void CanMatchSuccess()
     {
-        var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
+        var request = new Request { Name = "Giacomo", EMail = "mail@support.com" };
         var result = Validation.ValidateInput(request);
         result.Match(
             (x, msgs) => { request.Should().Be(x); },
@@ -69,7 +69,7 @@ public class SimplePatternMatching
     [Fact]
     public void CanMatchFailure()
     {
-        var request = new Request { Name = "Steffen", EMail = "" };
+        var request = new Request { Name = "Giacomo", EMail = "" };
         var result = Validation.ValidateInput(request);
         result.Match(
             (x, msgs) => { throw new Exception("wrong match case"); },
@@ -82,7 +82,7 @@ public class SimpleEitherPatternMatching
     [Fact]
     public void CanMatchSuccess()
     {
-        var request = new Request { Name = "Steffen", EMail = "mail@support.com" };
+        var request = new Request { Name = "Giacomo", EMail = "mail@support.com" };
         var result =
             Validation
                 .ValidateInput(request)
@@ -95,7 +95,7 @@ public class SimpleEitherPatternMatching
     [Fact]
     public void CanMatchFailure()
     {
-        var request = new Request { Name = "Steffen", EMail = "" };
+        var request = new Request { Name = "Giacomo", EMail = "" };
         var result =
             Validation.ValidateInput(request)
             .Either(
