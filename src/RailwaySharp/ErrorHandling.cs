@@ -491,9 +491,7 @@ namespace RailwaySharp
         public static Result<TResult, TMessage> Select<TSuccess, TMessage, TResult>(this Result<TSuccess, TMessage> result,
             Func<TSuccess, TResult> func) => Trial.Lift(func, result);
 
-        /// <summary>
-        /// Returns the error messages or fails if the result was a success.
-        /// </summary>
+        /// <summary>Returns the error messages or fails if the result was a success.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -512,9 +510,7 @@ namespace RailwaySharp
             return bad.Messages;
         }
 
-        /// <summary>
-        /// Returns the result or fails if the result was an error.
-        /// </summary>
+        /// <summary>Returns the result or fails if the result was an error.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
