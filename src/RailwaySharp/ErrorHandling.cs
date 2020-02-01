@@ -268,11 +268,9 @@ namespace RailwaySharp
             if (result == null) throw new ArgumentNullException(nameof(result));
             if (func == null) throw new ArgumentException(nameof(func));
 
-            Func<TValue, IEnumerable<TMessage>, Result<TSuccess, TMessage>> successFunc =
-                (succ, msgs) => MergeMessages(func(succ), msgs);
-            Func<IEnumerable<TMessage>, Result<TSuccess, TMessage>> failureFunc =
-                messages => new Bad<TSuccess, TMessage>(messages);
-            return Either(result, successFunc, failureFunc);
+            return Either<TValue, TMessage, Result<TSuccess, TMessage>>(result,
+                (succ, msgs) => MergeMessages(func(succ), msgs),
+                messages => new Bad<TSuccess, TMessage>(messages));
         }
 
         /// <summary>Flattens a nested result given the Failure types are equal.</summary>
