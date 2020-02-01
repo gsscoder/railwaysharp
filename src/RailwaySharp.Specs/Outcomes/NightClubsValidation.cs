@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using FluentAssertions;
-using RailwaySharp.ErrorHandling;
+using RailwaySharp;
 
 enum Sobriety { Sober, Tipsy, Drunk, Paralytic, Unconscious }
 enum Gender { Male, Female }

@@ -26,7 +26,7 @@ File:ErrorHandling.cs Internal
 ## Install via NuGet
 
 ```sh
-$ dotnet add package RailwaySharp --version 1.1.2
+$ dotnet add package RailwaySharp --version 1.1.5
 ```
 
 ## At a glance

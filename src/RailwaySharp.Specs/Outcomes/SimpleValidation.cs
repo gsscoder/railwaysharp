@@ -2,7 +2,7 @@
 using System.Linq;
 using Xunit;
 using FluentAssertions;
-using RailwaySharp.ErrorHandling;
+using RailwaySharp;
 
 public class Request
 {

@@ -10,7 +10,7 @@ using System.Linq;
 using CSharpx;
 #endif
 
-namespace RailwaySharp.ErrorHandling
+namespace RailwaySharp
 {
 #if !ERRH_INTERNAL
     public
