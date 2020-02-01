@@ -55,19 +55,21 @@ namespace RailwaySharp
 #endif 
     sealed class Ok<TSuccess, TMessage> : Result<TSuccess, TMessage>
     {
-        readonly Tuple<TSuccess, IEnumerable<TMessage>> _value;
+        readonly TSuccess _success;
+        readonly IEnumerable<TMessage> _messages;
 
         public Ok(TSuccess success, IEnumerable<TMessage> messages)
             : base(ResultType.Ok)
         {
             if (messages == null) throw new ArgumentNullException(nameof(messages));
 
-            _value = Tuple.Create(success, messages);
+           _success = success;
+           _messages = messages;
         }
 
-        public TSuccess Success => _value.Item1;
+        public TSuccess Success => _success;
 
-        public IEnumerable<TMessage> Messages => _value.Item2;
+        public IEnumerable<TMessage> Messages => _messages;
     }
 
     /// <summary>Represents the result of a failed computation.</summary>
