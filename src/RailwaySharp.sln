@@ -5,9 +5,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{8B8144
 		paket.dependencies = paket.dependencies
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp", "src\RailwaySharp\RailwaySharp.csproj", "{DDE48D28-267E-48D5-85E9-AFE8878A5721}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp", "RailwaySharp/RailwaySharp.csproj", "{414402B9-9818-47F0-A864-1D2EEB18CAED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp.Tests", "tests\RailwaySharp.Tests\RailwaySharp.Tests.csproj", "{03188E48-64C0-466A-A9A4-8C70FCC7669A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp.Specs", "RailwaySharp.Specs/RailwaySharp.Specs.csproj", "{AD4D24AB-23C1-4AD2-A1E7-288264CB430C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +23,14 @@ Global
 		{03188E48-64C0-466A-A9A4-8C70FCC7669A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03188E48-64C0-466A-A9A4-8C70FCC7669A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03188E48-64C0-466A-A9A4-8C70FCC7669A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{414402B9-9818-47F0-A864-1D2EEB18CAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{414402B9-9818-47F0-A864-1D2EEB18CAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{414402B9-9818-47F0-A864-1D2EEB18CAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{414402B9-9818-47F0-A864-1D2EEB18CAED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD4D24AB-23C1-4AD2-A1E7-288264CB430C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD4D24AB-23C1-4AD2-A1E7-288264CB430C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD4D24AB-23C1-4AD2-A1E7-288264CB430C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD4D24AB-23C1-4AD2-A1E7-288264CB430C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
