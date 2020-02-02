@@ -1,3 +1,6 @@
+[![NuGet](https://img.shields.io/nuget/dt/railwaysharp.svg)](https://nuget.org/packages/railwaysharp)
+[![NuGet](https://img.shields.io/nuget/v/railwaysharp.svg)](https://nuget.org/packages/railwaysharp)
+
 # <img src="/assets/icon.png" height="30px" alt="RailwaySharp Logo"> RailwaySharp
 
 Native **C#** implementation of Railway-oriented programming. Inspired by [Chessie](https://github.com/fsprojects/Chessie). This project is used in [Command Line Parser Library](https://github.com/commandlineparser/commandline).
