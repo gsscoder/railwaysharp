@@ -63,7 +63,7 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 - Namespace set to `RailwaySharp`.
 - Moved first parameter of `Trial` class.
 - Fixed an issue in `Trail.Collect`.
-- Removed static class `Result`, methods moved to `Result<Result<TSuccess, TMessage>>`.
+- Removed static class `Result`, methods moved to `Result<TSuccess, TMessage>`.
 
 ## Related Projects
 
