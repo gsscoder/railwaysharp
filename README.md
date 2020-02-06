@@ -29,7 +29,7 @@ File:ErrorHandling.cs Internal
 ## Install via NuGet
 
 ```sh
-$ dotnet add package RailwaySharp --version 1.2.0
+$ dotnet add package RailwaySharp --version 1.2.2
 ```
 
 ## At a glance
@@ -60,10 +60,9 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 
 ## Latest Changes
 
-- Ported to .NET Core.
-- Compiles for .NET Framework targets.
 - Namespace set to `RailwaySharp`.
 - Moved first parameter of `Trial` class.
+- Fixed an issue in `Trail.Collect`.
 
 ## Related Projects
 
