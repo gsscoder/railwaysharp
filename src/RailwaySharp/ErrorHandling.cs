@@ -376,6 +376,21 @@ namespace RailwaySharp
 #endif
     static class ResultExtensions
     {
+#if ERRH_ADD_MAYBE_METHODS
+#if ERRH_ENABLE_INLINE_METHODS
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        /// <summary>Builds a Maybe type instance from a Result one.</summary>
+        public static Maybe<TSuccess> ToMaybe<TSuccess, TMessage>(this Result<TSuccess, TMessage> result)
+        {
+            if (result == null) throw new ArgumentNullException(nameof(result));
+
+            return result.Tag == ResultType.Ok
+                   ? Maybe.Just(((Ok<TSuccess, TMessage>)result).Success)
+                   : Maybe.Nothing<TSuccess>();
+        }
+#endif
+
         /// <summary>Allows pattern matching on Results.</summary>
 #if ERRH_ENABLE_INLINE_METHODS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -531,20 +546,5 @@ namespace RailwaySharp
                    ? ((Ok<TSuccess, TMessage>)result).Messages
                    : Enumerable.Empty<TMessage>();
         }
-
-#if ERRH_ADD_MAYBE_METHODS
-#if ERRH_ENABLE_INLINE_METHODS
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        /// <summary>Builds a Maybe type instance from a Result one.</summary>
-        public static Maybe<TSuccess> ToMaybe<TSuccess, TMessage>(this Result<TSuccess, TMessage> result)
-        {
-            if (result == null) throw new ArgumentNullException(nameof(result));
-
-            return result.Tag == ResultType.Ok
-                   ? Maybe.Just(((Ok<TSuccess, TMessage>)result).Success)
-                   : Maybe.Nothing<TSuccess>();
-        }
-#endif
     }
 }
