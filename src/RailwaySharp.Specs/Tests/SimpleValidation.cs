@@ -15,12 +15,12 @@ public class Validation
     public static Result<Request, string> ValidateInput(Request input)
     {
         if (input.Name == "") {
-            return Result.FailWith<Request, string>("Name must not be blank");
+            return Result<Request, string>.FailWith("Name must not be blank");
         }
         if (input.EMail == "") {
-            return Result.FailWith<Request, string>("Email must not be blank");
+            return Result<Request, string>.FailWith("Email must not be blank");
         }
-        return Result.Succeed<Request, string>(input);
+        return Result<Request, string>.Succeed(input);
 
     }
 }
@@ -31,14 +31,14 @@ public class TrySpecs
     public void TryWillCatch()
     {
         var exn = new Exception("Hello World");
-        var result = Result.Try<string>(() => { throw exn; });
+        var result = Result<object, object>.Try(() => { throw exn; });
         exn.Should().Be(result.FailedWith().First());
     }
 
     [Fact]
     public void TryWillReturnValue()
     {
-        var result = Result.Try(() => "hello world");
+        var result = Result<string, object>.Try(() => "hello world");
         "hello world".Should().Be(result.SucceededWith());
     }
 }

@@ -38,12 +38,12 @@ $ dotnet add package RailwaySharp --version 1.2.2
 public static Result<Request, string> ValidateInput(Request input)
 {
     if (input.Name == string.Empty) {
-        return Result.FailWith<Request, string>("Name must not be blank");
+        return Result<Request, string>.FailWith("Name must not be blank");
     }
     if (input.EMail == string.Empty) {
-        return Result.FailWith<Request, string>("Email must not be blank");
+        return Result<Request, string>.FailWith("Email must not be blank");
     }
-    return Result.Succeed<Request, string>(input);
+    return Result<Request, string>.Succeed(input);
 }
 
 var request = new Request { Name = "Giacomo", EMail = "gsscoder@gmail.com" };
@@ -63,6 +63,7 @@ Simply define an async computation result using `Task<Result<TSuccess,TMessage>>
 - Namespace set to `RailwaySharp`.
 - Moved first parameter of `Trial` class.
 - Fixed an issue in `Trail.Collect`.
+- Removed static class `Result`, methods moved to `Result<Result<TSuccess, TMessage>>`.
 
 ## Related Projects
 

@@ -31,6 +31,59 @@ namespace RailwaySharp
         protected Result(ResultType tag) => _tag = tag;
         public ResultType Tag => _tag;
 
+        /// <summary>Creates a Failure result with the given messages.</summary>
+        public static Result<TSuccess, TMessage> FailWith(IEnumerable<TMessage> messages)
+        {
+            if (messages == null) throw new ArgumentException(nameof(messages));
+
+            return new Bad<TSuccess, TMessage>(messages);
+        }
+
+        /// <summary>Creates a Failure result with the given message.</summary>
+        public static Result<TSuccess, TMessage> FailWith(TMessage message)
+        {
+            if (message == null) throw new ArgumentException(nameof(message));
+
+            return new Bad<TSuccess, TMessage>(new[] { message });
+        }
+
+        /// <summary>Creates a Success result with the given value.</summary>
+        public static Result<TSuccess, TMessage> Succeed(TSuccess value)
+        {
+            return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
+        }
+
+        /// <summary>Creates a Success result with the given value and the given message.</summary>
+        public static Result<TSuccess, TMessage> Succeed(TSuccess value, TMessage message)
+        {
+            if (message == null) throw new ArgumentException(nameof(message));
+
+            return new Ok<TSuccess, TMessage>(value, new[] { message });
+        }
+
+        /// <summary>Creates a Success result with the given value and the given messages.</summary>
+        public static Result<TSuccess, TMessage> Succeed(TSuccess value, IEnumerable<TMessage> messages)
+        {
+            if (messages == null) throw new ArgumentException(nameof(messages));
+
+            return new Ok<TSuccess, TMessage>(value, messages);
+        }
+
+        /// <summary>Executes the given function on a given success or captures the failure.</summary>
+        public static Result<TSuccess, Exception> Try(Func<TSuccess> func)
+        {
+            if (func == null) throw new ArgumentException(nameof(func));
+
+            try {
+                return new Ok<TSuccess, Exception>(
+                        func(), Enumerable.Empty<Exception>());
+            }
+            catch (Exception ex) {
+                return new Bad<TSuccess, Exception>(
+                    new[] { ex });
+            }
+        }
+
         public override string ToString()
         {
             switch (Tag) {
@@ -89,65 +142,6 @@ namespace RailwaySharp
         }
 
         public IEnumerable<TMessage> Messages => _messages;
-    }
-
-#if !ERRH_INTERNAL
-    public
-#endif
-    static class Result
-    {
-        /// <summary>Creates a Failure result with the given messages.</summary>
-        public static Result<TSuccess, TMessage> FailWith<TSuccess, TMessage>(IEnumerable<TMessage> messages)
-        {
-            if (messages == null) throw new ArgumentException(nameof(messages));
-
-            return new Bad<TSuccess, TMessage>(messages);
-        }
-
-        /// <summary>Creates a Failure result with the given message.</summary>
-        public static Result<TSuccess, TMessage> FailWith<TSuccess, TMessage>(TMessage message)
-        {
-            if (message == null) throw new ArgumentException(nameof(message));
-
-            return new Bad<TSuccess, TMessage>(new[] { message });
-        }
-
-        /// <summary>Creates a Success result with the given value.</summary>
-        public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value)
-        {
-            return new Ok<TSuccess, TMessage>(value, Enumerable.Empty<TMessage>());
-        }
-
-        /// <summary>Creates a Success result with the given value and the given message.</summary>
-        public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, TMessage message)
-        {
-            if (message == null) throw new ArgumentException(nameof(message));
-
-            return new Ok<TSuccess, TMessage>(value, new[] { message });
-        }
-
-        /// <summary>Creates a Success result with the given value and the given messages.</summary>
-        public static Result<TSuccess, TMessage> Succeed<TSuccess, TMessage>(TSuccess value, IEnumerable<TMessage> messages)
-        {
-            if (messages == null) throw new ArgumentException(nameof(messages));
-
-            return new Ok<TSuccess, TMessage>(value, messages);
-        }
-
-        /// <summary>Executes the given function on a given success or captures the failure.</summary>
-        public static Result<TSuccess, Exception> Try<TSuccess>(Func<TSuccess> func)
-        {
-            if (func == null) throw new ArgumentException(nameof(func));
-
-            try {
-                return new Ok<TSuccess, Exception>(
-                        func(), Enumerable.Empty<Exception>());
-            }
-            catch (Exception ex) {
-                return new Bad<TSuccess, Exception>(
-                    new[] { ex });
-            }
-        }
     }
 
 #if !ERRH_INTERNAL

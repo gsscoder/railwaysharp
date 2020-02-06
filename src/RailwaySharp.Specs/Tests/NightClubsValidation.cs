@@ -31,32 +31,32 @@ class Club
     public static Result<Person, string> CheckAge(Person p)
     {
         if (p.Age < 18) {
-            return Result.FailWith<Person, string>("Too young!");
+            return Result<Person, string>.FailWith("Too young!");
         }
         if (p.Age > 40) {
-            return Result.FailWith<Person, string>("Too old!");
+            return Result<Person, string>.FailWith("Too old!");
         }
-        return Result.Succeed<Person, string>(p);
+        return Result<Person, string>.Succeed(p);
     }
 
     public static Result<Person, string> CheckClothes(Person p)
     {
         if (p.Gender == Gender.Male && !p.Clothes.Contains("Tie")) {
-            return Result.FailWith<Person, string>("Smarten up!");
+            return Result<Person, string>.FailWith("Smarten up!");
         }
         if (p.Gender == Gender.Female && p.Clothes.Contains("Trainers")) {
-            return Result.FailWith<Person, string>("Wear high heels!");
+            return Result<Person, string>.FailWith("Wear high heels!");
         }
-        return Result.Succeed<Person, string>(p);
+        return Result<Person, string>.Succeed(p);
     }
 
     public static Result<Person, string> CheckSobriety(Person p)
     {
         if (new[] { Sobriety.Drunk, Sobriety.Paralytic, Sobriety.Unconscious }
             .Contains(p.Sobriety)) {
-            return Result.FailWith<Person, string>("Sober up!");
+            return Result<Person, string>.FailWith("Sober up!");
         }
-        return Result.Succeed<Person, string>(p);
+        return Result<Person, string>.Succeed(p);
     }
 }
 
