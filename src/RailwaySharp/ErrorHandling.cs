@@ -537,6 +537,9 @@ namespace RailwaySharp
                 string.Join(Environment.NewLine, bad.Messages.Select(m => m.ToString()))));
         }
 
+#if ERRH_ENABLE_INLINE_METHODS
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         /// <summary>Returns messages in case of success, otherwise an empty sequence.</summary>
         public static IEnumerable<TMessage> SuccessMessages<TSuccess, TMessage>(this Result<TSuccess, TMessage> result)
         {
