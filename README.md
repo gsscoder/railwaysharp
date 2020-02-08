@@ -3,7 +3,7 @@
 
 # <img src="/assets/icon.png" height="30px" alt="RailwaySharp Logo"> RailwaySharp
 
-Native **C#** implementation of Railway-oriented programming. Inspired by [Chessie](https://github.com/fsprojects/Chessie). This project is used in [Command Line Parser Library](https://github.com/commandlineparser/commandline).
+Native **C#** implementation of Railway-oriented programming. Inspired by [Chessie](https://github.com/fsprojects/Chessie). This project is used in [Command Line Parser Library](https://github.com/commandlineparser/commandline) and [Integrity](https://github.com/gsscoder/integrity).
 
 ## Reference
 
