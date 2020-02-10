@@ -25,24 +25,6 @@ public class Validation
     }
 }
 
-public class TrySpecs
-{
-    [Fact]
-    public void TryWillCatch()
-    {
-        var exn = new Exception("Hello World");
-        var result = Result<object, object>.Try(() => { throw exn; });
-        exn.Should().Be(result.FailedWith().First());
-    }
-
-    [Fact]
-    public void TryWillReturnValue()
-    {
-        var result = Result<string, object>.Try(() => "hello world");
-        "hello world".Should().Be(result.SucceededWith());
-    }
-}
-
 public class SimpleValidation
 {
     [Fact]
