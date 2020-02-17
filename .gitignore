@@ -2,8 +2,6 @@
 .vscode/
 .vs
 tools/
-.paket/
-paket.lock
 [Oo]bj/
 [Bb]in/
 .nuget/
