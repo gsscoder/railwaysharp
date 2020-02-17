@@ -5,9 +5,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{8B8144
 		paket.dependencies = paket.dependencies
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp", "RailwaySharp/RailwaySharp.csproj", "{414402B9-9818-47F0-A864-1D2EEB18CAED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp", "src/RailwaySharp/RailwaySharp.csproj", "{414402B9-9818-47F0-A864-1D2EEB18CAED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp.Specs", "RailwaySharp.Specs/RailwaySharp.Specs.csproj", "{AD4D24AB-23C1-4AD2-A1E7-288264CB430C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwaySharp.Specs", "tests/RailwaySharp.Specs/RailwaySharp.Specs.csproj", "{AD4D24AB-23C1-4AD2-A1E7-288264CB430C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
